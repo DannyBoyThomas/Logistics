@@ -8,14 +8,10 @@ public class WorldPlacer : MonoBehaviour {
     List<Vector2> selectedPlaces;
     Vector2 firstPos;
     GameObject selectorPrefab;
-<<<<<<< HEAD
-<<<<<<< HEAD
+
     GameObject highlightPrefab;
     char dir = 'n';
-=======
->>>>>>> origin/master
-=======
->>>>>>> parent of 2597915... Finished Placer
+
    public bool buttonClicked = false;
     bool prevClicked = false;
 	void Start () {
@@ -30,26 +26,15 @@ public class WorldPlacer : MonoBehaviour {
 	void Update ()
     {
         GameObject g = getCurrentItem();
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-
-      
-            if (Input.GetKeyDown(KeyCode.Escape))
+if (Input.GetKeyDown(KeyCode.Escape))
             {
                 Destroy(currentItem);
                 setCurrentItem(selectorPrefab);
             }
-=======
-       
-        if (g != null )
-        {
->>>>>>> origin/master
-=======
-       
-        if (g != null )
-        {
->>>>>>> parent of 2597915... Finished Placer
+
+      
+
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, 50,layer))
@@ -91,6 +76,7 @@ public class WorldPlacer : MonoBehaviour {
                         int valY = difY < 0 ? -1 : 1;
                         if (Mathf.Abs(difX) > Mathf.Abs(difY)) //addOn x Axis
                         {
+                            dir = 'x';
                             for (int i = 0; i <= Mathf.Abs(difX); i++)
                             {
                                 selectedPlaces.Add(new Vector2(firstPos.x + (valX*i), firstPos.y));
@@ -98,6 +84,7 @@ public class WorldPlacer : MonoBehaviour {
                         }
                         else // y axis
                         {
+                            dir = 'y';
                             for (int i = 0; i <= Mathf.Abs(difY); i++)
                             {
                                 selectedPlaces.Add(new Vector2(firstPos.x, firstPos.y + (valY*i)));
@@ -110,25 +97,10 @@ public class WorldPlacer : MonoBehaviour {
               }
             if (Input.GetMouseButtonUp(0) )
             {
-<<<<<<< HEAD
-<<<<<<< HEAD
+
                spawn();
-=======
-=======
->>>>>>> parent of 2597915... Finished Placer
-                if (!buttonClicked)
-                {
-                    spawn();
-                }
-                else
-                {
-                    buttonClicked = false;
-                }
-                
-               
->>>>>>> origin/master
-                
-            }
+
+             }
           }  
 	}
     void draw()
@@ -156,18 +128,10 @@ public class WorldPlacer : MonoBehaviour {
             Vector2 vec = selectedPlaces[i];
             if (isSpaceForObject(currentItem, (int)vec.x, (int)vec.y))
             {
-<<<<<<< HEAD
-<<<<<<< HEAD
+
                
                 GameObject h = (GameObject)Instantiate(currentItem, new Vector3(vec.x, 0.5f, vec.y), getDirection());
-=======
-                Debug.Log("spawned");
-                GameObject h = (GameObject)Instantiate(currentItem, new Vector3(vec.x, 0.5f, vec.y), currentItem.transform.rotation);
->>>>>>> origin/master
-=======
-                Debug.Log("spawned");
-                GameObject h = (GameObject)Instantiate(currentItem, new Vector3(vec.x, 0.5f, vec.y), currentItem.transform.rotation);
->>>>>>> parent of 2597915... Finished Placer
+
                 Instances.gridManager.addObject(h);
             }
         }
@@ -183,5 +147,44 @@ public class WorldPlacer : MonoBehaviour {
     public bool isSpaceForObject(GameObject g, int x, int z)
     {
         return Instances.gridManager.isSpaceForObject(g, x, z);
+    }
+    Quaternion getDirection()
+    {
+        if (selectedPlaces.Count > 1)
+        {
+            if (dir == 'x') //x axis
+            {
+                int last = (int)(selectedPlaces[selectedPlaces.Count - 1]).x;
+                int first = (int)firstPos.x;
+                int dif = last - first;
+                if (dif > 0) // + on X
+                {
+                    return Quaternion.Euler(0, 90, 0);
+                }
+                else
+                {
+                    return Quaternion.Euler(0, 270, 0);
+                }
+            }
+            else if (dir == 'y') //y axis
+            {
+                int last = (int)(selectedPlaces[selectedPlaces.Count - 1]).y;
+                int first = (int)firstPos.y;
+                int dif = last - first;
+                if (dif > 0) // + on X
+                {
+                    return Quaternion.Euler(0, 0, 0);
+                }
+                else
+                {
+                    return Quaternion.Euler(0, 180, 0);
+                }
+            }
+        }
+        else
+        {
+            return currentItem.transform.rotation;
+        }
+        return Quaternion.identity;
     }
 }

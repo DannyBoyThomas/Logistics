@@ -43,11 +43,11 @@ if (Input.GetKeyDown(KeyCode.Escape))
                 {
                     int x = Mathf.RoundToInt(hit.point.x);
                     int z = Mathf.RoundToInt(hit.point.z);
-                    GameObject high = highlightPrefab.transform.FindChild("Parent").gameObject;
-                    Graphics.DrawMeshNow(high.GetComponent<MeshFilter>().sharedMesh, new Vector3(x, 0.5f, z), Quaternion.identity, LayerMask.NameToLayer("Overlay"));
+                    removeSelectors();
+                    Instantiate(highlightPrefab,new Vector3(x,0.5f,z),Quaternion.identity);
                     if (g != null)
                     {
-                    g.transform.position = new Vector3(x, 0.5f, z);
+                        g.transform.position = new Vector3(x, 0.5f, z);
                     
                     Vector2 coords = new Vector2(x,z);
             

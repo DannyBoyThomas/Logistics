@@ -63,19 +63,33 @@ public class Furnace : MonoBehaviour, ItemAcceptor
                         {
                             if (nextAcceptor.AcceptItem(Item))
                             {
+                                processed = false;
                                 this.Item = null;
                                 hasReachedMiddle = false;
+                                
                             }
                         }
                     }
                     else
                     {
-                       // Vector2 furnacePos = Instances.gridManager.GetCoords(this.gameObject);
-                      //  Vector3 pos = new Vector3(furnacePos.x, 0, furnacePos.y) + (Vector3)transform.forward;
+                        Vector2 furnacePos = Instances.gridManager.GetCoords(this.gameObject);
+                        Vector3 pos = new Vector3(furnacePos.x, 0, furnacePos.y) + (Vector3)transform.forward;
 
-                        //pos = new Vector3(Mathf.RoundToInt(pos.x), 0, Mathf.RoundToInt(pos.z));
+                        pos = new Vector2(Mathf.RoundToInt(pos.x), Mathf.RoundToInt(pos.z));
 
-                        //Instances.gridManager
+
+                        if (Instances.gridManager.getObject(pos) != null)
+                        {
+                            Debug.Log("GetObject");
+                            GameObject go = Instances.gridManager.getObject(pos);
+                            if (go.GetComponent<ItemAcceptor>() != null)
+                            {
+                                ItemAcceptor acceptor = go.GetComponent<ItemAcceptor>();
+                                nextAcceptor = acceptor;
+                            }
+                        }
+                        else
+                            print("No Object at pos");
                     }
                 }
                 else Process += Time.deltaTime;

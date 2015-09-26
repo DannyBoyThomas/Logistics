@@ -16,6 +16,10 @@ public class GridManager : MonoBehaviour
     {
 
     }
+    public void setObject(GameObject g, int x, int z)
+    {
+        grid[x,z] = g;
+    }
     public bool addObject(GameObject g)
     {
         int x = Mathf.RoundToInt(g.transform.position.x);

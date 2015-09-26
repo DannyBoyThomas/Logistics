@@ -13,11 +13,13 @@ public class WorldPlacer : MonoBehaviour {
     char dir = 'n';
 
    public bool buttonClicked = false;
+   GameObject worldParent;
     bool prevClicked = false;
 	void Start () {
         selectedPlaces = new List<Vector2>();
         selectorPrefab = (GameObject)Resources.Load("Prefabs/Selector");
         highlightPrefab = (GameObject)Resources.Load("Prefabs/Highlighter");
+        worldParent = GameObject.Find("World Objects");
 	}
 	
 	// Update is called once per frame
@@ -25,15 +27,15 @@ public class WorldPlacer : MonoBehaviour {
     public LayerMask layer;
 	void Update ()
     {
-        GameObject g = getCurrentItem();
+        
 
-if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButtonDown(1) && getCurrentItem() != null)
             {
                 Destroy(currentItem);
-                setCurrentItem(selectorPrefab);
+                setCurrentItem(null);
             }
 
-      
+        GameObject g = getCurrentItem();
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -49,53 +51,54 @@ if (Input.GetKeyDown(KeyCode.Escape))
                     {
                         g.transform.position = new Vector3(x, 0.5f, z);
                     
-                    Vector2 coords = new Vector2(x,z);
+                        Vector2 coords = new Vector2(x,z);
             
 
-                    if (Input.GetKeyDown(KeyCode.Q))
-                    {
-                        g.transform.Rotate(Vector3.up, 90);
-                    }
-                    if (Input.GetKeyDown(KeyCode.E))
-                    {
-                        g.transform.Rotate(Vector3.up, -90);
-                    }
-
-                    if (Input.GetMouseButtonDown(0))
-                    {
-                        firstPos = coords;
-
-                    }
-                    else if (Input.GetMouseButton(0))
-                    {
-
-                        selectedPlaces = new List<Vector2>();
-                        int difX = (int)(coords.x - firstPos.x);
-                        int difY = (int)(coords.y - firstPos.y);
-                        int valX = difX < 0 ? -1 : 1;
-                        int valY = difY < 0 ? -1 : 1;
-                        if (Mathf.Abs(difX) > Mathf.Abs(difY)) //addOn x Axis
+                        if (Input.GetKeyDown(KeyCode.Q))
                         {
-                            dir = 'x';
-                            for (int i = 0; i <= Mathf.Abs(difX); i++)
-                            {
-                                selectedPlaces.Add(new Vector2(firstPos.x + (valX*i), firstPos.y));
-                            }
+                            g.transform.Rotate(Vector3.up, 90);
                         }
-                        else // y axis
+                        if (Input.GetKeyDown(KeyCode.E))
                         {
-                            dir = 'y';
-                            for (int i = 0; i <= Mathf.Abs(difY); i++)
-                            {
-                                selectedPlaces.Add(new Vector2(firstPos.x, firstPos.y + (valY*i)));
-                            }
+                            g.transform.Rotate(Vector3.up, -90);
                         }
-                        draw();
-                    }
+
+                        if (Input.GetMouseButtonDown(0))
+                        {
+                            selectedPlaces.Clear();
+                            firstPos = coords;
+
+                        }
+                        else if (Input.GetMouseButton(0))
+                        {
+
+                            selectedPlaces = new List<Vector2>();
+                            int difX = (int)(coords.x - firstPos.x);
+                            int difY = (int)(coords.y - firstPos.y);
+                            int valX = difX < 0 ? -1 : 1;
+                            int valY = difY < 0 ? -1 : 1;
+                            if (Mathf.Abs(difX) > Mathf.Abs(difY)) //addOn x Axis
+                            {
+                                dir = 'x';
+                                for (int i = 0; i <= Mathf.Abs(difX); i++)
+                                {
+                                    selectedPlaces.Add(new Vector2(firstPos.x + (valX*i), firstPos.y));
+                                }
+                            }
+                            else // y axis
+                            {
+                                dir = 'y';
+                                for (int i = 0; i <= Mathf.Abs(difY); i++)
+                                {
+                                    selectedPlaces.Add(new Vector2(firstPos.x, firstPos.y + (valY*i)));
+                                }
+                            }
+                            draw();
+                        }
                     
                  }
               }
-            if (Input.GetMouseButtonUp(0) )
+            if (Input.GetMouseButtonUp(0) && g != null)
             {
 
                spawn();
@@ -131,10 +134,13 @@ if (Input.GetKeyDown(KeyCode.Escape))
 
                
                 GameObject h = (GameObject)Instantiate(currentItem, new Vector3(vec.x, 0.5f, vec.y), getDirection());
+                h.transform.parent = worldParent.transform;
+                h.name = currentItem.name.Split('(')[0]; //remove clone name
 
                 Instances.gridManager.addObject(h);
             }
         }
+        selectedPlaces.Clear();
     }
     public void setCurrentItem(GameObject g)
     {

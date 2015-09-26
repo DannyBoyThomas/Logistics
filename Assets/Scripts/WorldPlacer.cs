@@ -8,6 +8,7 @@ public class WorldPlacer : MonoBehaviour {
     List<Vector2> selectedPlaces;
     Vector2 firstPos;
     GameObject selectorPrefab;
+    bool prevClicked = false;
 	void Start () {
         selectedPlaces = new List<Vector2>();
         selectorPrefab = (GameObject)Resources.Load("Prefabs/Selector");
@@ -45,6 +46,7 @@ public class WorldPlacer : MonoBehaviour {
                     if (Input.GetMouseButtonDown(0))
                     {
                         firstPos = coords;
+
                     }
                     else if (Input.GetMouseButton(0))
                     {
@@ -67,7 +69,7 @@ public class WorldPlacer : MonoBehaviour {
                         }
                         draw();
                     }
-                    else
+                    else if(Input.GetMouseButtonUp(0))
                     {
                         spawn();
                     }

@@ -42,7 +42,7 @@ public class ProcessorEditor : Editor
 
             if(Selection.activeGameObject.GetComponent<Processor>())
             {
-                Selection.activeGameObject.GetComponent<Processor>().AddRecipe(new Recipe() { Input = input.ItemName, Output = output.ItemName });
+                Selection.activeGameObject.GetComponent<Processor>().AddRecipe(new Recipe() { Input = input, Output = output });
             }
         }
 
@@ -61,7 +61,7 @@ public class ProcessorEditor : Editor
             {
                 EditorGUILayout.BeginHorizontal();
 
-                EditorGUILayout.LabelField(string.Format("{0} = {1}", process.Recipes[i].Input, process.Recipes[i].Output));
+                EditorGUILayout.LabelField(string.Format("{0} = {1}", process.Recipes[i].Input.ItemName, process.Recipes[i].Output.ItemName));
                 if (GUILayout.Button("X"))
                 {
                     process.Recipes.RemoveAt(i);

@@ -9,10 +9,13 @@ public class WorldPlacer : MonoBehaviour {
     Vector2 firstPos;
     GameObject selectorPrefab;
 <<<<<<< HEAD
+<<<<<<< HEAD
     GameObject highlightPrefab;
     char dir = 'n';
 =======
 >>>>>>> origin/master
+=======
+>>>>>>> parent of 2597915... Finished Placer
    public bool buttonClicked = false;
     bool prevClicked = false;
 	void Start () {
@@ -28,6 +31,7 @@ public class WorldPlacer : MonoBehaviour {
     {
         GameObject g = getCurrentItem();
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
       
@@ -41,6 +45,11 @@ public class WorldPlacer : MonoBehaviour {
         if (g != null )
         {
 >>>>>>> origin/master
+=======
+       
+        if (g != null )
+        {
+>>>>>>> parent of 2597915... Finished Placer
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, 50,layer))
@@ -102,8 +111,11 @@ public class WorldPlacer : MonoBehaviour {
             if (Input.GetMouseButtonUp(0) )
             {
 <<<<<<< HEAD
+<<<<<<< HEAD
                spawn();
 =======
+=======
+>>>>>>> parent of 2597915... Finished Placer
                 if (!buttonClicked)
                 {
                     spawn();
@@ -145,12 +157,17 @@ public class WorldPlacer : MonoBehaviour {
             if (isSpaceForObject(currentItem, (int)vec.x, (int)vec.y))
             {
 <<<<<<< HEAD
+<<<<<<< HEAD
                
                 GameObject h = (GameObject)Instantiate(currentItem, new Vector3(vec.x, 0.5f, vec.y), getDirection());
 =======
                 Debug.Log("spawned");
                 GameObject h = (GameObject)Instantiate(currentItem, new Vector3(vec.x, 0.5f, vec.y), currentItem.transform.rotation);
 >>>>>>> origin/master
+=======
+                Debug.Log("spawned");
+                GameObject h = (GameObject)Instantiate(currentItem, new Vector3(vec.x, 0.5f, vec.y), currentItem.transform.rotation);
+>>>>>>> parent of 2597915... Finished Placer
                 Instances.gridManager.addObject(h);
             }
         }

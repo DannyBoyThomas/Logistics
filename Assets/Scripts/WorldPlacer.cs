@@ -136,6 +136,7 @@ public class WorldPlacer : MonoBehaviour {
                 GameObject h = (GameObject)Instantiate(currentItem, new Vector3(vec.x, 0.5f, vec.y), getDirection());
                 h.transform.parent = worldParent.transform;
                 h.name = currentItem.name.Split('(')[0]; //remove clone name
+                h.GetComponent<WorldObject>().setActive(true);
 
                 Instances.gridManager.addObject(h);
             }

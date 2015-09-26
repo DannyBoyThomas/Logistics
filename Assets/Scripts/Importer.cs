@@ -15,9 +15,6 @@ public class Importer : MonoBehaviour
 	
 	void Update () 
     {
-        if (Item != null)
-        {
-           
                 if (nextAcceptor == null)
                 {
                    Vector2 furnacePos = Instances.gridManager.GetCoords(this.gameObject);
@@ -39,6 +36,11 @@ public class Importer : MonoBehaviour
                     else
                         print("No Object at pos");
                 }
+                else
+                {
+                    if(Item == null)    
+                    Item = GameObject.Instantiate(ImportItem, SpawnPoint.position, Quaternion.identity) as GameObject;
+                }
 
                      Vector3 itempos = transform.position + transform.forward;
                     itempos = new Vector3(Mathf.RoundToInt(itempos.x),0, Mathf.RoundToInt(itempos.z));
@@ -50,12 +52,8 @@ public class Importer : MonoBehaviour
                             this.Item = null;
                         }
                     }
-            }
-        else
-        {
-            Item = GameObject.Instantiate(ImportItem, SpawnPoint.position, Quaternion.identity) as GameObject;
-        }
-        
-	}
+
+
+    }
 
 }

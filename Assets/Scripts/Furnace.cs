@@ -37,11 +37,14 @@ public class Furnace : MonoBehaviour, ItemAcceptor
             }
             else
             {
-                if (Process >= MaxProcess)
+                if(!processed)
+                    Process += Time.deltaTime;
+
+                if (Process >= MaxProcess || processed)
                 {
                     if (!processed)
                     {
-                        Process += Time.deltaTime;
+                        
                         Item item = processor.FindOutput(Item.GetComponent<Item>());
                         if (item != null)
                         {

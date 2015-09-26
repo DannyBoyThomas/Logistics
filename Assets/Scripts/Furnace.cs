@@ -41,7 +41,7 @@ public class Furnace : MonoBehaviour, ItemAcceptor
                 {
                     if (!processed)
                     {
-                        
+                        Process += Time.deltaTime;
                         Item item = processor.FindOutput(Item.GetComponent<Item>());
                         if (item != null)
                         {
@@ -66,7 +66,6 @@ public class Furnace : MonoBehaviour, ItemAcceptor
                                 processed = false;
                                 this.Item = null;
                                 hasReachedMiddle = false;
-                                
                             }
                         }
                     }
@@ -92,7 +91,7 @@ public class Furnace : MonoBehaviour, ItemAcceptor
                             print("No Object at pos");
                     }
                 }
-                else Process += Time.deltaTime;
+                
             }
         }
     }

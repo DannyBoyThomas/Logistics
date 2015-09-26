@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Importer : MonoBehaviour
+public class Importer : WorldObject
 {
     public GameObject Item;
     public ItemAcceptor nextAcceptor;
@@ -13,7 +13,7 @@ public class Importer : MonoBehaviour
 	
 	}
 	
-	void Update () 
+	public override void WorldUpdate () 
     {
                 if (nextAcceptor == null)
                 {

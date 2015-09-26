@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class OutputBox : MonoBehaviour, ItemAcceptor
+public class OutputBox : WorldObject, ItemAcceptor
 {
     public GameObject Item;
     public bool hasReachedMiddle = false;
@@ -13,7 +13,7 @@ public class OutputBox : MonoBehaviour, ItemAcceptor
 	
 	}
 	
-	void Update () 
+	public override void WorldUpdate () 
     {
         if (Item != null)
         {

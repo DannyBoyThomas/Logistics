@@ -3,7 +3,7 @@ using System.Collections;
 
 [RequireComponent(typeof(Processor))]
 
-public class Furnace : MonoBehaviour, ItemAcceptor
+public class Furnace : WorldObject, ItemAcceptor
 {
     public GameObject Item;
     public bool hasReachedMiddle = false;
@@ -14,6 +14,8 @@ public class Furnace : MonoBehaviour, ItemAcceptor
     public float MaxProcess = 3;
     public float Process = 0;
 
+    public int ProductionCost = 10;
+
 
     Processor processor;
 
@@ -22,7 +24,7 @@ public class Furnace : MonoBehaviour, ItemAcceptor
         processor = GetComponent<Processor>();
     }
 
-    void Update()
+    public override void WorldUpdate()
     {
         if (Item != null)
         {

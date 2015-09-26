@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Splitter : MonoBehaviour, ItemAcceptor
+public class Splitter : WorldObject, ItemAcceptor
 {
     public GameObject Item;
     public bool hasReachedMiddle = false;
@@ -15,7 +15,7 @@ public class Splitter : MonoBehaviour, ItemAcceptor
 	
 	}
 	
-	void Update () 
+	public override void WorldUpdate () 
     {
         if (Item != null)
         {

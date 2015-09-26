@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Conveyor : MonoBehaviour 
+public class Conveyor : MonoBehaviour, ItemAcceptor
 {
     public GameObject Item;
     public bool hasReachedMiddle = false;
@@ -30,15 +30,22 @@ public class Conveyor : MonoBehaviour
             {
                 if (nextAcceptor != null)
                 {
-                    if (nextAcceptor.AcceptItem(Item))
+                    Vector3 pos = transform.position + transform.forward;
+                    pos = new Vector3(Mathf.RoundToInt(pos.x),0, Mathf.RoundToInt(pos.z));
+
+                    if (nextAcceptor.CanAccept(Item.GetComponent<Item>(), (int)pos.x, (int)pos.z))
                     {
-                        this.Item = null;
-                        hasReachedMiddle = false;
+                        if (nextAcceptor.AcceptItem(Item))
+                        {
+                            this.Item = null;
+                            hasReachedMiddle = false;
+                        }
                     }
                 }
                 else
                 {
-
+                    Vector3 pos = transform.position + transform.forward;
+                    pos = new Vector3(Mathf.RoundToInt(pos.x), 0, Mathf.RoundToInt(pos.z));
                 }
             }
         }
@@ -53,6 +60,16 @@ public class Conveyor : MonoBehaviour
             return true;
         }
         
+        return false;
+    }
+
+
+
+    public bool CanAccept(Item item, int x, int y)
+    {
+        if (Item == null)
+            return true;
+
         return false;
     }
 }

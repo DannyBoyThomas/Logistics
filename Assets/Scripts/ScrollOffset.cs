@@ -6,6 +6,6 @@ public class ScrollOffset : MonoBehaviour
 
 	void Update () 
     {
-        GetComponent<Renderer>().material.mainTextureOffset = new Vector2(0, ConveyorInfo.ConveyorTextureOffset);
+        GetComponent<Renderer>().sharedMaterial.mainTextureOffset = new Vector2(0, ConveyorInfo.ConveyorTextureOffset);
 	}
 }

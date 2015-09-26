@@ -8,35 +8,29 @@ public class WorldPlacer : MonoBehaviour {
     List<Vector2> selectedPlaces;
     Vector2 firstPos;
     GameObject selectorPrefab;
+    GameObject highlightPrefab;
     char dir = 'n';
    public bool buttonClicked = false;
     bool prevClicked = false;
 	void Start () {
         selectedPlaces = new List<Vector2>();
         selectorPrefab = (GameObject)Resources.Load("Prefabs/Selector");
+        highlightPrefab = (GameObject)Resources.Load("Prefabs/Highlighter");
 	}
 	
 	// Update is called once per frame
-    public IEnumerator cooldown()
-    {
-        Debug.Log("called");
-        buttonClicked = true;
-        yield return new WaitForSeconds(1f);
-        print("after");
-        buttonClicked = false;
-    }
+    
     public LayerMask layer;
 	void Update ()
     {
         GameObject g = getCurrentItem();
-       
-        if (g != null )
-        {
 
+
+      
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 Destroy(currentItem);
-                setCurrentItem(null);
+                setCurrentItem(selectorPrefab);
             }
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -46,8 +40,12 @@ public class WorldPlacer : MonoBehaviour {
                 {
                     int x = Mathf.RoundToInt(hit.point.x);
                     int z = Mathf.RoundToInt(hit.point.z);
-                    Debug.Log("moving");
+                    GameObject high = highlightPrefab.transform.FindChild("Parent").gameObject;
+                    Graphics.DrawMeshNow(high.GetComponent<MeshFilter>().sharedMesh, new Vector3(x, 0.5f, z), Quaternion.identity, LayerMask.NameToLayer("Overlay"));
+                    if (g != null)
+                    {
                     g.transform.position = new Vector3(x, 0.5f, z);
+                    
                     Vector2 coords = new Vector2(x,z);
             
 
@@ -98,9 +96,6 @@ public class WorldPlacer : MonoBehaviour {
             {
                spawn();
                 
-                
-               
-                
             }
           }  
 	}
@@ -130,7 +125,7 @@ public class WorldPlacer : MonoBehaviour {
             Vector2 vec = selectedPlaces[i];
             if (isSpaceForObject(currentItem, (int)vec.x, (int)vec.y))
             {
-                Debug.Log("spawned");
+               
                 GameObject h = (GameObject)Instantiate(currentItem, new Vector3(vec.x, 0.5f, vec.y), getDirection());
                 Instances.gridManager.addObject(h);
             }

@@ -15,7 +15,7 @@ public class ItemMenu : MonoBehaviour {
     public void OnClick(GameObject g)
     {
         Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        StartCoroutine(Instances.worldPlacer.cooldown());
+        
         GameObject h = (GameObject)Instantiate(g, pos, Quaternion.identity);
         Instances.worldPlacer.setCurrentItem(h);
      

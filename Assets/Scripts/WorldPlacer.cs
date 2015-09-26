@@ -127,7 +127,7 @@ public class WorldPlacer : MonoBehaviour {
             if (isSpaceForObject(currentItem, (int)vec.x, (int)vec.y))
             {
                 Debug.Log("spawned");
-                GameObject h = (GameObject)Instantiate(currentItem, new Vector3(vec.x, 0.5f, vec.y), Quaternion.identity);
+                GameObject h = (GameObject)Instantiate(currentItem, new Vector3(vec.x, 0.5f, vec.y), currentItem.transform.rotation);
                 Instances.gridManager.addObject(h);
             }
         }

@@ -10,6 +10,7 @@ public class WorldPlacer : MonoBehaviour {
     GameObject selectorPrefab;
 
     GameObject highlightPrefab;
+    GameObject errorPrefab;
     char dir = 'n';
 
    public bool buttonClicked = false;
@@ -19,6 +20,7 @@ public class WorldPlacer : MonoBehaviour {
         selectedPlaces = new List<Vector2>();
         selectorPrefab = (GameObject)Resources.Load("Prefabs/Selector");
         highlightPrefab = (GameObject)Resources.Load("Prefabs/Highlighter");
+       errorPrefab = (GameObject)Resources.Load("Prefabs/Delete");
         worldParent = GameObject.Find("World Objects");
 	}
 	
@@ -117,7 +119,8 @@ public class WorldPlacer : MonoBehaviour {
         for (int i = 0; i < selectedPlaces.Count; i++)
         {
             Vector2 vec = selectedPlaces[i];
-            Instantiate(selectorPrefab, new Vector3(vec.x, 0.5f, vec.y), Quaternion.identity);
+            GameObject prefab = Instances.gridManager.inBounds(vec.x, vec.y) && isSpaceForObject(selectorPrefab, (int)vec.x, (int)vec.y) ? selectorPrefab : errorPrefab;
+            Instantiate(prefab, new Vector3(vec.x, 0.5f, vec.y), Quaternion.identity);
         }
     }
     void removeSelectors()

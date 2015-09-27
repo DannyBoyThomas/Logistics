@@ -51,7 +51,11 @@ public class GridManager : MonoBehaviour
     }
     public GameObject getObject(Vector2 pos)
     {
-        return grid[(int)pos.x, (int)pos.y];
+        if(inBounds(pos.x,pos.y))
+        {
+          return grid[(int)pos.x, (int)pos.y];
+        }
+        return null;
     }
     public Vector2 GetCoordsFromVector(Vector3 vec)
     {

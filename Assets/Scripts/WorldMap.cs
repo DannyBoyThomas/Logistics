@@ -34,7 +34,7 @@ public class WorldMap : MonoBehaviour {
                 if (hit.collider != null && hit.collider.name == "Plane")
                 {
                     coord = Instances.gridManager.GetCoordsFromVector(hit.point);
-                    Vector3 t0 =  cam.ScreenToWorldPoint(Input.mousePosition);
+                   
                     target = new Vector3(hit.point.x-camOffset, camPos.y, hit.point.z-camOffset);
                 }
             }

@@ -82,6 +82,7 @@ public class WorldEditor : MonoBehaviour {
     {
         removeSelectors();
 
+
         for (int i = 0; i < selectedPlaces.Count; i++)
         {
             Vector2 vec = selectedPlaces[i];
@@ -116,7 +117,7 @@ public class WorldEditor : MonoBehaviour {
     {
          Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, 50, layer))
+            if (Physics.Raycast(ray, out hit, 200, layer))
             {
                 if (hit.collider != null && hit.collider.name == "Plane")
                 {

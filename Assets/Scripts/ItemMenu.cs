@@ -13,28 +13,27 @@ public class ItemMenu : MonoBehaviour {
     {
         if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
         {
-            RectTransform rect = GetComponent<RectTransform>();
-            Vector2 mousePosition = Input.mousePosition;
-            Vector3[] worldCorners = new Vector3[4];
-            rect.GetWorldCorners(worldCorners);
-
-            if (mousePosition.x >= worldCorners[0].x && mousePosition.x < worldCorners[2].x
-               && mousePosition.y >= worldCorners[0].y && mousePosition.y < worldCorners[2].y)
-            {
+           if(HoverMenu())
+           {
                 Instances.worldPlacer.destroyCurrentItem();
             }
         }
 	}
-    public void OnClick(GameObject g)
+    public bool HoverMenu()
     {
-        Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        
-        GameObject h = (GameObject)Instantiate(g, pos, Quaternion.identity);
-        Instances.worldPlacer.setCurrentItem(h);
-     
-       
-      
+        RectTransform rect = GetComponent<RectTransform>();
+        Vector2 mousePosition = Input.mousePosition;
+        Vector3[] worldCorners = new Vector3[4];
+        rect.GetWorldCorners(worldCorners);
+
+        if (mousePosition.x >= worldCorners[0].x && mousePosition.x < worldCorners[2].x
+           && mousePosition.y >= worldCorners[0].y && mousePosition.y < worldCorners[2].y)
+        {
+            return true;
+        }
+        return false;
     }
+    
 
 
 }

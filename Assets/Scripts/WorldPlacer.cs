@@ -46,7 +46,10 @@ public class WorldPlacer : MonoBehaviour {
                     int x = Mathf.RoundToInt(hit.point.x);
                     int z = Mathf.RoundToInt(hit.point.z);
                     removeSelectors();
-                    Instantiate(highlightPrefab,new Vector3(x,0.5f,z),Quaternion.identity);
+                    if (!Instances.itemMenu.HoverMenu())
+                    {
+                        Instantiate(highlightPrefab, new Vector3(x, 0.5f, z), Quaternion.identity);
+                    }
                     if (g != null)
                     {
                         g.transform.position = new Vector3(x, 0.5f, z);
@@ -110,6 +113,7 @@ public class WorldPlacer : MonoBehaviour {
     {
         removeSelectors();
        
+
         for (int i = 0; i < selectedPlaces.Count; i++)
         {
             Vector2 vec = selectedPlaces[i];

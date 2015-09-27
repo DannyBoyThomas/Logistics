@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class ItemMenu : MonoBehaviour {
 
@@ -7,15 +8,47 @@ public class ItemMenu : MonoBehaviour {
 	void Start () {
 	
 	}
-	
+    float targetOpacity = 0.5f;
+    float hiddenOpacity = 0.1f;
 	// Update is called once per frame
 	void Update () 
     {
-        if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
+        if (HoverMenu())
         {
-           if(HoverMenu())
-           {
+            if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)) //hide selector
+            {
                 Instances.worldPlacer.destroyCurrentItem();
+            }
+            Color col = GetComponent<Image>().color;
+            if (col.a < targetOpacity)
+            {
+                GetComponent<Image>().color += new Color(0, 0, 0, 0.1f);
+
+                for (int i = 0; i < transform.childCount; i++)
+                {
+                    Color c = transform.GetChild(i).GetComponent<Image>().color;
+                    transform.GetChild(i).GetComponent<Image>().color = new Color(c.r, c.g, c.b, col.a * 2);
+                    Color t = transform.GetChild(i).GetComponentInChildren<Text>().color;
+                    transform.GetChild(i).GetComponentInChildren<Text>().color = new Color(t.r, t.g, t.b, col.a*2);
+                   
+                }
+            }
+
+        }
+        else
+        {
+            Color col = GetComponent<Image>().color;
+            if (col.a > hiddenOpacity)
+            {
+                GetComponent<Image>().color -= new Color(0, 0, 0, 0.1f);
+                 for (int i = 0; i < transform.childCount; i++)
+                {
+                    Color c = transform.GetChild(i).GetComponent<Image>().color;
+                    transform.GetChild(i).GetComponent<Image>().color = new Color(c.r, c.g, c.b, col.a );
+                     Color t = transform.GetChild(i).GetComponentInChildren<Text>().color;
+                     transform.GetChild(i).GetComponentInChildren<Text>().color = new Color(t.r, t.g, t.b, col.a);
+                   
+                }
             }
         }
 	}

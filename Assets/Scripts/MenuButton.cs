@@ -13,6 +13,7 @@ public class MenuButton : MonoBehaviour {
             Text t = GetComponentInChildren<Text>();
             t.text = spawnObject.name;
             Texture2D image= AssetPreview.GetAssetPreview(spawnObject);
+            
             if (image != null)
             {
                 GetComponent<Image>().sprite = Sprite.Create(image, new Rect(0, 0, image.width, image.height), new Vector2(0.5f, 0.5f));

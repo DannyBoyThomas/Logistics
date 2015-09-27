@@ -9,8 +9,21 @@ public class ItemMenu : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-	
+	void Update () 
+    {
+        if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
+        {
+            RectTransform rect = GetComponent<RectTransform>();
+            Vector2 mousePosition = Input.mousePosition;
+            Vector3[] worldCorners = new Vector3[4];
+            rect.GetWorldCorners(worldCorners);
+
+            if (mousePosition.x >= worldCorners[0].x && mousePosition.x < worldCorners[2].x
+               && mousePosition.y >= worldCorners[0].y && mousePosition.y < worldCorners[2].y)
+            {
+                Instances.worldPlacer.destroyCurrentItem();
+            }
+        }
 	}
     public void OnClick(GameObject g)
     {

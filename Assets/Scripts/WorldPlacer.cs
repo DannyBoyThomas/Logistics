@@ -31,15 +31,15 @@ public class WorldPlacer : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButtonDown(1) && getCurrentItem() != null)
             {
-                Destroy(currentItem);
-                setCurrentItem(null);
+                destroyCurrentItem();
+                
             }
 
         GameObject g = getCurrentItem();
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, 50,layer))
+            if (Physics.Raycast(ray, out hit, 200,layer))
             {
                 if (hit.collider != null && hit.collider.name == "Plane")
                 {
@@ -136,7 +136,7 @@ public class WorldPlacer : MonoBehaviour {
                 GameObject h = (GameObject)Instantiate(currentItem, new Vector3(vec.x, 0.5f, vec.y), getDirection());
                 h.transform.parent = worldParent.transform;
                 h.name = currentItem.name.Split('(')[0]; //remove clone name
-                h.GetComponent<WorldObject>().setActive(true);
+                h.GetComponent<WorldObject>().IsActive = true;
 
                 Instances.gridManager.addObject(h);
             }
@@ -193,5 +193,10 @@ public class WorldPlacer : MonoBehaviour {
             return currentItem.transform.rotation;
         }
         return Quaternion.identity;
+    }
+    public void destroyCurrentItem()
+    {
+            Destroy(currentItem);
+            setCurrentItem(null);
     }
 }

@@ -38,20 +38,33 @@ public class WorldEditor : MonoBehaviour {
                 int difY = (int)(coord.y - firstPos.y);
                 int valX = difX < 0 ? -1 : 1;
                 int valY = difY < 0 ? -1 : 1;
-                if (Mathf.Abs(difX) > Mathf.Abs(difY)) //addOn x Axis
+                if(Input.GetKey(KeyCode.LeftControl))
                 {
-                    dir = 'x';
                     for (int i = 0; i <= Mathf.Abs(difX); i++)
                     {
-                        selectedPlaces.Add(new Vector2(firstPos.x + (valX * i), firstPos.y));
+                        for (int j = 0; j < Mathf.Abs(difY); j++)
+                        {
+                            selectedPlaces.Add(new Vector2(firstPos.x + (valX * i), firstPos.y + (valY * j)));
+                        }
                     }
                 }
-                else // y axis
+                else
                 {
-                    dir = 'y';
-                    for (int i = 0; i <= Mathf.Abs(difY); i++)
+                    if (Mathf.Abs(difX) > Mathf.Abs(difY)) //addOn x Axis
                     {
-                        selectedPlaces.Add(new Vector2(firstPos.x, firstPos.y + (valY * i)));
+                        dir = 'x';
+                        for (int i = 0; i <= Mathf.Abs(difX); i++)
+                        {
+                            selectedPlaces.Add(new Vector2(firstPos.x + (valX * i), firstPos.y));
+                        }
+                    }
+                    else // y axis
+                    {
+                        dir = 'y';
+                        for (int i = 0; i <= Mathf.Abs(difY); i++)
+                        {
+                            selectedPlaces.Add(new Vector2(firstPos.x, firstPos.y + (valY * i)));
+                        }
                     }
                 }
                 draw();

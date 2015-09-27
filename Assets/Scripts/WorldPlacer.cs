@@ -34,6 +34,7 @@ public class WorldPlacer : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButtonDown(1) && getCurrentItem() != null)
             {
                 destroyCurrentItem();
+                selectedPlaces.Clear();
                 
             }
 
@@ -45,7 +46,7 @@ public class WorldPlacer : MonoBehaviour {
         }
         else
         {
-            GameObject.Find("Grid").GetComponent<Renderer>().material.color = new Color(13/255f,65/255f,68/255f);
+            GameObject.Find("Grid").GetComponent<Renderer>().material.color = new Color(155/255f,152/255f,140/255f,173/255f);
         }
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;

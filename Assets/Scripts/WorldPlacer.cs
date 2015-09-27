@@ -39,6 +39,14 @@ public class WorldPlacer : MonoBehaviour {
 
         GameObject g = getCurrentItem();
 
+        if (g == null)
+        {
+            GameObject.Find("Grid").GetComponent<Renderer>().material.color = Color.clear;
+        }
+        else
+        {
+            GameObject.Find("Grid").GetComponent<Renderer>().material.color = new Color(13/255f,65/255f,68/255f);
+        }
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, 200,layer))

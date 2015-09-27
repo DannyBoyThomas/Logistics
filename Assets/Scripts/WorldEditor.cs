@@ -8,6 +8,7 @@ public class WorldEditor : MonoBehaviour {
     Vector2 firstPos;
     char dir = 'n';
     GameObject deletePrefab;
+    bool cancelled = false;
 	void Start () 
     {
         deletePrefab = (GameObject)Resources.Load("Prefabs/Delete");
@@ -16,8 +17,13 @@ public class WorldEditor : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
     {
+
         Vector2 coord = getPointerCoord();
         GameObject cI = Instances.worldPlacer.getCurrentItem();
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            cancelled = true;
+        }
         if (coord.x >= 0 &&  cI== null)
         {
          
@@ -30,8 +36,9 @@ public class WorldEditor : MonoBehaviour {
 
             }
 
-            else if (Input.GetMouseButton(1))
+            else if (Input.GetMouseButton(1) && !cancelled)
             {
+                
 
                 selectedPlaces = new List<Vector2>();
                 int difX = (int)(coord.x - firstPos.x);
@@ -72,8 +79,11 @@ public class WorldEditor : MonoBehaviour {
             }
             if (Input.GetMouseButtonUp(1))
             {
-               
-                remove();
+                if (!cancelled)
+                {
+                    remove();
+                }
+                cancelled = false;
 
             }
         }

@@ -45,7 +45,7 @@ public class WorldMap : MonoBehaviour {
          if (Input.GetMouseButton(2)) //held down -> move
         {
            Vector3 world = cam.ScreenToWorldPoint(Input.mousePosition);
-            //cam.transform.position = Vector3.Lerp(camPos, world, Time.deltaTime);
+            cam.transform.position = Vector3.Lerp(camPos, world, Time.deltaTime);
         }
         if (Input.GetMouseButtonUp(2))
         {

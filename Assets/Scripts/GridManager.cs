@@ -25,7 +25,7 @@ public class GridManager : MonoBehaviour
         int x = Mathf.RoundToInt(g.transform.position.x);
         int z = Mathf.RoundToInt(g.transform.position.z);
 
-        if (isSpaceForObject(g, x, z))
+        if ( inBounds(x,z) && isSpaceForObject(g, x, z))
         {
             grid[x, z] = g;
             return true;
@@ -52,5 +52,22 @@ public class GridManager : MonoBehaviour
     public GameObject getObject(Vector2 pos)
     {
         return grid[(int)pos.x, (int)pos.y];
+    }
+    public Vector2 GetCoordsFromVector(Vector3 vec)
+    {
+        return new Vector2(Mathf.RoundToInt(vec.x), Mathf.RoundToInt(vec.z));
+    }
+    public bool inBounds(float x, float z)
+    {
+        Vector2 coords = new Vector2(Mathf.RoundToInt(x), Mathf.RoundToInt(z));
+        if (coords.x >= 0 && coords.x < size)
+        {
+            if (coords.y >= 0 && coords.y < size)
+            {
+                //Debug.Log(coords);
+                return true;
+            }
+        }
+        return false;
     }
 }

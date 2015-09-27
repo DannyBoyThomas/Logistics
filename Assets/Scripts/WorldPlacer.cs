@@ -133,7 +133,7 @@ public class WorldPlacer : MonoBehaviour {
         for (int i = 0; i < selectedPlaces.Count; i++)
         {
             Vector2 vec = selectedPlaces[i];
-            if (isSpaceForObject(currentItem, (int)vec.x, (int)vec.y))
+            if (Instances.gridManager.inBounds(vec.x,vec.y) && isSpaceForObject(currentItem, (int)vec.x, (int)vec.y))
             {
 
                

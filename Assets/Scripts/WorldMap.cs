@@ -4,61 +4,72 @@ using System.Collections;
 public class WorldMap : MonoBehaviour {
 
 	
-	void Start () {
-	
+	void Start () 
+    {
+        target = new Vector3(-1,-1,-1);
+        coord = new Vector2(-10, -10);
+        coords2 = Vector2.zero;
 	}
     float boundary = 0.05f;
     float speedMultiplier = 200;
     float maxOrtho =14;
     float minOrtho =3;
+    Vector3 target;
+    Vector2 coord, coords2;
+    public LayerMask layer;
+    float camOffset = 14;
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetMouseButton(2))
+        Camera cam = Camera.main;
+       
+        Vector3 camPos = cam.transform.position;
+       
+         if(Input.GetMouseButtonDown(2)) // one click
         {
-            Camera cam = Camera.main;
-            Vector2 mousePos = Input.mousePosition;
-            Vector3 pos = cam.ScreenToViewportPoint(mousePos);
-            Vector3 camPos = cam.transform.position;
-            Vector3 translate = Vector3.zero;
-            if (pos.x > 1)
+              Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, 200, layer))
             {
-                pos.x = 1;
+                if (hit.collider != null && hit.collider.name == "Plane")
+                {
+                    coord = Instances.gridManager.GetCoordsFromVector(hit.point);
+                    Vector3 t0 =  cam.ScreenToWorldPoint(Input.mousePosition);
+                    target = new Vector3(hit.point.x-camOffset, camPos.y, hit.point.z-camOffset);
+                }
             }
-            if (pos.x < 0)
-            {
-                pos.x = 0;
-            }
-            if (pos.y > 1)
-            {
-                pos.y = 1;
-            }
-            if (pos.y < 0)
-            {
-                pos.y = 0;
-            }
-            if (pos.x <= boundary)
-            {
-                float speed = (boundary - pos.x) * speedMultiplier;
-                translate = new Vector3(-1, 0, 0) * speed;
-            }
-            if (pos.x >= 1 - boundary)
-            {
-                float speed = (boundary - (1 - pos.x)) * speedMultiplier;
-                translate += new Vector3(1, 0, 0) * speed;
-            }
-            if (pos.y <= boundary)
-            {
-                float speed = (boundary - pos.y) * speedMultiplier;
-                translate += new Vector3(0, -1, 0) * speed;
-            }
-            if (pos.y >= 1 - boundary)
-            {
-                float speed = (boundary - (1 - pos.y)) * speedMultiplier;
-                translate += new Vector3(0, 1, 0) * speed;
-            }
-            cam.transform.position = Vector3.Lerp(camPos, camPos + translate, Time.deltaTime);
+            
+           
         }
+        else
+         if (Input.GetMouseButton(2)) //held down -> move
+        {
+           Vector3 world = cam.ScreenToWorldPoint(Input.mousePosition);
+            //cam.transform.position = Vector3.Lerp(camPos, world, Time.deltaTime);
+        }
+        if (Input.GetMouseButtonUp(2))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, 200, layer))
+            {
+                if (hit.collider != null && hit.collider.name == "Plane")
+                {
+                    coords2 = Instances.gridManager.GetCoordsFromVector(hit.point);
+                    
+                }
+            }
+           
+           
+            
+        }
+        //Debug.Log(coord + ", C2: " + coords2);
+        if (Mathf.Abs(coords2.x - coord.x)<3 && Mathf.Abs(coords2.y - coord.y)<3)
+        {
+            
+            cam.transform.position = Vector3.Lerp(camPos, target, Time.deltaTime);
+        }
+
 
         if (Input.GetAxis("Mouse ScrollWheel") > 0) // forward
          {

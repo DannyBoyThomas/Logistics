@@ -12,6 +12,12 @@ public class Conveyor : WorldObject, ItemAcceptor
     {
 	
 	}
+
+    public void OnDestroy()
+    {
+        if (Item != null)
+            Destroy(Item);
+    }
 	
 	public override void WorldUpdate () 
     {

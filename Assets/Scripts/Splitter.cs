@@ -8,7 +8,14 @@ public class Splitter : WorldObject, ItemAcceptor
     public Transform Center;
     public ItemAcceptor nextAcceptor;
 
-    int side = 0;
+    public int side = 0;
+    Vector3[] sides = { Vector3.forward, Vector3.right, Vector3.back, Vector3.left };
+
+    public void OnDestroy()
+    {
+        if (Item != null)
+            Destroy(Item);
+    }
 
 	void Start () 
     {
@@ -17,6 +24,9 @@ public class Splitter : WorldObject, ItemAcceptor
 	
 	public override void WorldUpdate () 
     {
+        if (side > 3)
+            side = 0;
+
         if (Item != null)
         {
             if (!hasReachedMiddle)
@@ -28,11 +38,13 @@ public class Splitter : WorldObject, ItemAcceptor
                 if (pos == Center.position)
                     hasReachedMiddle = true;
             }
-            else
+
+            if(hasReachedMiddle)
             {
                 if (nextAcceptor != null)
                 {
-                    Vector3 pos = transform.position + transform.forward;
+                    Vector3 pos = transform.position + transform.TransformDirection(sides[side]);
+
                     pos = new Vector3(Mathf.RoundToInt(pos.x),0, Mathf.RoundToInt(pos.z));
 
                     if (nextAcceptor.CanAccept(Item.GetComponent<Item>(), (int)pos.x, (int)pos.z))
@@ -41,31 +53,38 @@ public class Splitter : WorldObject, ItemAcceptor
                         {
                             this.Item = null;
                             hasReachedMiddle = false;
-                            transform.forward *= -1;
                             nextAcceptor = null;
+                            side++;
                         }
                         else
                         {
-                            transform.forward *= -1;
                             nextAcceptor = null;
+                            side++;
                         }
                     }
                     else
                     {
-                        transform.forward *= -1;
                         nextAcceptor = null;
+                        side++;
                     }
                 }
                 else
                 {
                     Vector2 furnacePos = Instances.gridManager.GetCoords(this.gameObject);
-                    Vector3 pos = new Vector3(furnacePos.x, 0, furnacePos.y) + (Vector3)transform.forward;
+                    Vector3 pos = new Vector3(furnacePos.x, 0, furnacePos.y) + transform.TransformDirection(sides[side]);
 
                     pos = new Vector2(Mathf.RoundToInt(pos.x), Mathf.RoundToInt(pos.z));
 
 
                     if (Instances.gridManager.getObject(pos) != null)
                     {
+                        if (Instances.gridManager.getObject(pos).transform.forward == -transform.TransformDirection(sides[side]))
+                        {
+                            side++;
+                            nextAcceptor = null;
+                            return;
+                        }
+
                         Debug.Log("GetObject");
                         GameObject go = Instances.gridManager.getObject(pos);
                         if (go.GetComponent<ItemAcceptor>() != null)
@@ -75,7 +94,8 @@ public class Splitter : WorldObject, ItemAcceptor
                         }
                     }
                     else
-                        transform.forward *= -1;
+                        side++;
+                    
                 }
             }
         }

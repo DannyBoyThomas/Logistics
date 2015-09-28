@@ -12,6 +12,13 @@ public class Importer : WorldObject
     {
 	
 	}
+
+    public void OnDestroy()
+    {
+        ImportItem = null;
+        if (Item != null)
+            Destroy(Item);
+    }
 	
 	public override void WorldUpdate () 
     {
@@ -30,6 +37,7 @@ public class Importer : WorldObject
                         if (go.GetComponent<ItemAcceptor>() != null)
                         {
                             ItemAcceptor acceptor = go.GetComponent<ItemAcceptor>();
+
                             nextAcceptor = acceptor;
                         }
                     }
@@ -40,6 +48,7 @@ public class Importer : WorldObject
                 {
                     if(Item == null)    
                     Item = GameObject.Instantiate(ImportItem, SpawnPoint.position, Quaternion.identity) as GameObject;
+                    Item.hideFlags = HideFlags.HideInHierarchy;
                 }
 
                      Vector3 itempos = transform.position + transform.forward;

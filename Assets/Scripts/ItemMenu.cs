@@ -8,7 +8,7 @@ public class ItemMenu : MonoBehaviour {
 	void Start () {
 	
 	}
-    float targetOpacity = 0.5f;
+    float targetOpacity = 1f;
     float hiddenOpacity = 0.1f;
 	// Update is called once per frame
 	void Update () 
@@ -20,6 +20,7 @@ public class ItemMenu : MonoBehaviour {
                 Instances.worldPlacer.destroyCurrentItem();
             }
             Color col = GetComponent<Image>().color;
+
             if (col.a < targetOpacity)
             {
                 GetComponent<Image>().color += new Color(0, 0, 0, 0.1f);
@@ -30,7 +31,6 @@ public class ItemMenu : MonoBehaviour {
                     transform.GetChild(i).GetComponent<Image>().color = new Color(c.r, c.g, c.b, col.a * 2);
                     Color t = transform.GetChild(i).GetComponentInChildren<Text>().color;
                     transform.GetChild(i).GetComponentInChildren<Text>().color = new Color(t.r, t.g, t.b, col.a*2);
-                   
                 }
             }
 

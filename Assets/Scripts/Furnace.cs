@@ -19,6 +19,12 @@ public class Furnace : WorldObject, ItemAcceptor
 
     Processor processor;
 
+    public void OnDestroy()
+    {
+        if (Item != null)
+            Destroy(Item);
+    }
+
     void Start()
     {
         processor = GetComponent<Processor>();

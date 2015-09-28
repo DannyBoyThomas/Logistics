@@ -15,6 +15,7 @@ public class MoneyManager : MonoBehaviour
 
     public int LastMoney;
     float timer = 5;
+    public List<int> moneys = new List<int>();
 
     public GameObject floatingText;
 
@@ -25,6 +26,10 @@ public class MoneyManager : MonoBehaviour
     }
     public void AddFunds(int money)
     {
+        moneys.Add(money);
+        if (moneys.Count > 25)
+            moneys.RemoveAt(0);
+
         Money += money;
     }
 
@@ -33,6 +38,7 @@ public class MoneyManager : MonoBehaviour
         AddFunds(money);
         SpawnFloatingText(pos, money);
     }
+
     public void BoughtObject(GameObject go)
     {
         if (!go.GetComponent<WorldObject>())
@@ -49,24 +55,31 @@ public class MoneyManager : MonoBehaviour
         Vector2 pos = Camera.main.WorldToScreenPoint(worldPos);
 
         GameObject floating = GameObject.Instantiate(floatingText);
-        floating.GetComponent<RectTransform>().anchoredPosition = pos;
-        
+        //floating.GetComponent<RectTransform>().anchoredPosition = pos;
 
-        FloatingText text = floating.GetComponent<FloatingText>();
+
+        FloatingText text = floating.GetComponent<FloatingText>(); text.worldPos = (Vector3)worldPos;
         if (Price > 0)
             text.color = PositiveColor;
         else
             text.color = NegativeColor;
 
         text.Text = "$ " + Price;
-
-        floating.transform.parent = this.transform;
+        
+        floating.transform.SetParent(this.transform);
     }
     
 
     public int GetAverage()
     {
-        return Money - LastMoney;
+        int money = 0;
+
+        for (int i = 0; i < moneys.Count; i++)
+            money += moneys[i];
+
+        money /= moneys.Count-1;
+
+        return money;
     }
 
     public void Update()
@@ -90,9 +103,10 @@ public class MoneyManager : MonoBehaviour
 
         if (timer < 0)
         {
-            LastMoney = Money;
-            timer = 10;
+            
+            timer = 3;
             gain = GetAverage();
+            LastMoney = Money;
         }
     }
 

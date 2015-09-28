@@ -15,8 +15,11 @@ public class Conveyor : WorldObject, ItemAcceptor
 
     public void OnDestroy()
     {
-        if (Item != null)
-            Destroy(Item);
+        Destroy(Item);
+    }
+    public void OnDisable()
+    {
+        Destroy(Item);
     }
 	
 	public override void WorldUpdate () 

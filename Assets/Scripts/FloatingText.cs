@@ -12,15 +12,22 @@ public class FloatingText : MonoBehaviour {
     public Color color;
     public float fadeTime = 1.5f;
 
+    public Vector3 worldPos;
 
+    float lifeTime = 0;
     public void Update()
     {
-        Vector2 pos = GetComponent<RectTransform>().anchoredPosition;
-        pos.y += Time.deltaTime * 15f;
+
+        lifeTime += Time.deltaTime;
+
+        transform.position = Camera.main.WorldToScreenPoint(worldPos);
+
+        Vector3 pos = GetComponent<RectTransform>().anchoredPosition;
+
+        pos.y += lifeTime * 15; // lifeTime;
+
         GetComponent<RectTransform>().anchoredPosition = pos;
 
-
-        
         text.text = Text;
         fadeTime -= Time.deltaTime;
 

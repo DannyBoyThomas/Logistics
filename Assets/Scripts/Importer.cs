@@ -22,6 +22,9 @@ public class Importer : WorldObject
 	
 	public override void WorldUpdate () 
     {
+        if (Item == null)
+            return;
+
                 if (nextAcceptor == null)
                 {
                    Vector2 furnacePos = Instances.gridManager.GetCoords(this.gameObject);

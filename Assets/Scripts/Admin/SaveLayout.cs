@@ -71,6 +71,7 @@ public class SaveLayout : MonoBehaviour
             h.name = o.name;
             h.transform.parent = GameObject.Find("World Objects").transform;
             h.GetComponent<WorldObject>().IsActive = true;
+            Instances.gridManager.setObject(h,o.x,o.y);
 
 
             

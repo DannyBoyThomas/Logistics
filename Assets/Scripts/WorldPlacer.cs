@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
+
 public class WorldPlacer : MonoBehaviour {
 
     public GameObject currentItem;

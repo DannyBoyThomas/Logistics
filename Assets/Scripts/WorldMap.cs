@@ -44,8 +44,20 @@ public class WorldMap : MonoBehaviour {
         else
          if (Input.GetMouseButton(2)) //held down -> move
         {
-           Vector3 world = cam.ScreenToWorldPoint(Input.mousePosition);
-            cam.transform.position = Vector3.Lerp(camPos, world, Time.deltaTime);
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, 200, layer))
+            {
+                if (hit.collider != null && hit.collider.name == "Plane")
+                {
+                    coord = Instances.gridManager.GetCoordsFromVector(hit.point);
+
+                    Vector3 world = new Vector3(hit.point.x - camOffset, camPos.y, hit.point.z - camOffset);
+                    cam.transform.position = Vector3.Lerp(camPos, world, Time.deltaTime);
+                }
+            }
+           //Vector3 world = cam.ScreenToWorldPoint(Input.mousePosition);
+          
         }
         if (Input.GetMouseButtonUp(2))
         {
@@ -71,15 +83,57 @@ public class WorldMap : MonoBehaviour {
         }
 
 
-        if (Input.GetAxis("Mouse ScrollWheel") > 0) // forward
+        if (Input.GetAxis("Mouse ScrollWheel") > 0 ) // forward
          {
              Camera.main.orthographicSize--;
          }
-         if (Input.GetAxis("Mouse ScrollWheel") < 0) // back
+        if (Input.GetAxis("Mouse ScrollWheel") < 0 ) // back
          {
              Camera.main.orthographicSize++;
          }
+        if (Input.GetKey(KeyCode.Z))
+        {
+            Camera.main.orthographicSize -= 0.5f;
+        }
+        else if (Input.GetKey(KeyCode.X))
+        {
+            Camera.main.orthographicSize += 0.5f;
+        }
          Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize, minOrtho, maxOrtho );
+
+         float ortho = Camera.main.orthographicSize;
+         float speed = Time.deltaTime * ortho;
+         Vector3 camP = Camera.main.transform.position;
+
+         Vector3 offSet = Vector3.zero;
+         
+         if (Input.GetKey(KeyCode.W))
+         {
+             offSet += new Vector3(1.414f, 0, 1.414f);
+
+            
+         }
+         else
+             if (Input.GetKey(KeyCode.S))
+             {
+                 offSet += new Vector3(-1.414f, 0, -1.414f);
+
+             }
+         
+             
+         if (Input.GetKey(KeyCode.A))
+         {
+             offSet +=  new Vector3(-1.414f, 0, 1.414f);
+
+         }
+         else
+         if (Input.GetKey(KeyCode.D))
+         {
+             offSet += new Vector3(1.414f, 0, -1.414f);
+
+         }
+         
+         Camera.main.transform.position = Vector3.MoveTowards(camP, camP + offSet, speed);
 	
 	}
 }

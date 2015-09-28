@@ -28,6 +28,8 @@ public class OutputBox : WorldObject, ItemAcceptor
             }
             else
             {
+                Instances.moneyManager.SpawnFloatingText(transform.position, Item.GetComponent<Item>().Value);
+                Instances.moneyManager.AddFunds(Item.GetComponent<Item>().Value);
                 Destroy(Item.gameObject);
             }
         }

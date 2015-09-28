@@ -18,7 +18,7 @@ public class ConveyorInfo : MonoBehaviour
 
     public void Update()
     {
-        ConveyorTextureOffset += ConveyorSpeed * Time.deltaTime;
+        ConveyorTextureOffset += ConveyorSpeed * Time.deltaTime * (int)TimeManager.currentSpeed;
         globalMaterial.mainTextureOffset = new Vector2(0, ConveyorTextureOffset);
     }
 }

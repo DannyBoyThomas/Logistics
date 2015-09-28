@@ -57,6 +57,7 @@ public class Furnace : WorldObject, ItemAcceptor
                         if (item != null)
                         {
                             Destroy(Item);
+                            Instances.moneyManager.AddFunds(-ProductionCost, transform.position);
                             Item = GameObject.Instantiate(item.gameObject, OutputPoint.position, OutputPoint.rotation) as GameObject;
                             processed = true;
                             Process = 0;

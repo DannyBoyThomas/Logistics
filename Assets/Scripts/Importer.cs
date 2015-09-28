@@ -58,6 +58,8 @@ public class Importer : WorldObject
                     {
                         if (nextAcceptor.AcceptItem(Item))
                         {
+                            
+                            Instances.moneyManager.AddFunds(-Item.GetComponent<Item>().Value, transform.position);
                             this.Item = null;
                         }
                     }

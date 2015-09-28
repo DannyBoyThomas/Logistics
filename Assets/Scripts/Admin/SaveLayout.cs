@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 
 public class SaveLayout : MonoBehaviour 
 {
@@ -55,7 +56,11 @@ public class SaveLayout : MonoBehaviour
     }
     public void DeleteAll()
     {
-        PlayerPrefs.DeleteAll();
+        #if UNITY_EDITOR
+        
+         AssetDatabase.DeleteAsset("Assets/Resources/Saved Data");
+         AssetDatabase.CreateFolder("Assets/Resources", "Saved Data");
+        #endif
     }
     public void Load(string name)
     {
@@ -72,9 +77,6 @@ public class SaveLayout : MonoBehaviour
             h.transform.parent = GameObject.Find("World Objects").transform;
             h.GetComponent<WorldObject>().IsActive = true;
             Instances.gridManager.setObject(h,o.x,o.y);
-
-
-            
-        }
+          }
     }
 }

@@ -116,8 +116,11 @@ public class WorldEditor : MonoBehaviour {
             GameObject g = Instances.gridManager.getObject(vec);
             if (g != null)
             {
+                int price = g.GetComponent<WorldObject>().Cost;
+                
                 Destroy(g);
                 Instances.gridManager.setObject(null, (int)vec.x, (int)vec.y);
+                Instances.moneyManager.AddFunds(price, new Vector3(vec.x,0.5f,vec.y));
             }
         }
         selectedPlaces.Clear();

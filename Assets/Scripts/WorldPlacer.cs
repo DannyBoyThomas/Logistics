@@ -142,20 +142,29 @@ public class WorldPlacer : MonoBehaviour {
     }
     void spawn()
     {
-        removeSelectors();
-        for (int i = 0; i < selectedPlaces.Count; i++)
+        MoneyManager m = Instances.moneyManager;
+        if (getCurrentItem() != null)
         {
-            Vector2 vec = selectedPlaces[i];
-            if (Instances.gridManager.inBounds(vec.x,vec.y) && isSpaceForObject(currentItem, (int)vec.x, (int)vec.y))
+            int price = getCurrentItem().GetComponent<WorldObject>().Cost;
+
+            removeSelectors();
+            for (int i = 0; i < selectedPlaces.Count; i++)
             {
+                Vector2 vec = selectedPlaces[i];
+                if (Instances.gridManager.inBounds(vec.x, vec.y) && isSpaceForObject(currentItem, (int)vec.x, (int)vec.y))
+                {
 
-               
-                GameObject h = (GameObject)Instantiate(currentItem, new Vector3(vec.x, 0.5f, vec.y), getDirection());
-                h.transform.parent = worldParent.transform;
-                h.name = currentItem.name.Split('(')[0]; //remove clone name
-                h.GetComponent<WorldObject>().IsActive = true;
+                    if (m.Money >= price)
+                    {
+                        GameObject h = (GameObject)Instantiate(currentItem, new Vector3(vec.x, 0.5f, vec.y), getDirection());
+                        h.transform.parent = worldParent.transform;
+                        h.name = currentItem.name.Split('(')[0]; //remove clone name
+                        h.GetComponent<WorldObject>().IsActive = true;
 
-                Instances.gridManager.addObject(h);
+                        Instances.gridManager.addObject(h);
+                        m.AddFunds(-price,h.transform.position);
+                    }
+                }
             }
         }
         selectedPlaces.Clear();

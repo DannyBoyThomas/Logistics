@@ -14,22 +14,17 @@ public class MoneyManager : MonoBehaviour
     public Color NegativeColor;
 
     public int LastMoney;
-    float timer = 5;
-    public List<int> moneys = new List<int>();
-
+    float timer = 0;
+    
     public GameObject floatingText;
 
 
     public void Start()
     {
-        LastMoney = Money;
     }
     public void AddFunds(int money)
     {
-        moneys.Add(money);
-        if (moneys.Count > 25)
-            moneys.RemoveAt(0);
-
+        gain += money;
         Money += money;
     }
 
@@ -72,14 +67,8 @@ public class MoneyManager : MonoBehaviour
 
     public int GetAverage()
     {
-        int money = 0;
-
-        for (int i = 0; i < moneys.Count; i++)
-            money += moneys[i];
-
-        money /= moneys.Count-1;
-
-        return money;
+        return gain;
+        //return money;
     }
 
     public void Update()
@@ -103,10 +92,16 @@ public class MoneyManager : MonoBehaviour
 
         if (timer < 0)
         {
-            
+
+            if (gain < 0)
+                AverageGain.color = NegativeColor;
+            else
+                AverageGain.color = PositiveColor;
+
+            AverageGain.text = "$ " + gain;
+
             timer = 3;
-            gain = GetAverage();
-            LastMoney = Money;
+            gain = 0;
         }
     }
 

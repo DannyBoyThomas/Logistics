@@ -74,4 +74,20 @@ public class GridManager : MonoBehaviour
         }
         return false;
     }
+    public void ClearGrid()
+    {
+        for (int i = 0; i < size; i++)
+        {
+            for (int j = 0; j < size; j++)
+            {
+                if (grid[i, j] != null)
+                {
+                    Destroy(grid[i, j]);
+                        
+                }
+                grid[i,j] = null;
+            }
+        }
+        
+    }
 }

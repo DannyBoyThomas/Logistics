@@ -2,7 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class SaveLayout : MonoBehaviour {
+public class SaveLayout : MonoBehaviour 
+{
 
 	// Use this for initialization
 	void Start () {
@@ -15,38 +16,40 @@ public class SaveLayout : MonoBehaviour {
 	}
     public void Save(string levelName)
     {
-        int n = PlayerPrefs.GetInt("NumOfLevels");
-        PlayerPrefs.SetString("Levels"+ n, levelName);
-        int size = Instances.gridManager.size;
-        PlayerPrefs.SetInt(levelName + "Size" , size);
-
+        SaveTemplate temp = new SaveTemplate();
+        int size =Instances.gridManager.size;
+        temp.gridSize = size;
+        temp.levelName = levelName;
+        temp.objects = new List<ObjectTemplate>();
+       
         for (int i = 0; i < size; i++)
         {
+          
             for (int j = 0; j < size; j++)
             {
+               
                 GameObject g = Instances.gridManager.getObject(new Vector2(i,j));
                 if( g != null)
                 {
-                    PlayerPrefs.SetString("Object" + i + "x" + j, g.name);
-                    int rot = Mathf.RoundToInt(g.transform.position.y);
-                    PlayerPrefs.SetInt("ObjectDir" + i + "x" + j, rot);
+                    ObjectTemplate t = new ObjectTemplate();
+                    t.name = g.name;
+                    t.x = i;
+                    t.y = j;
+                    t.rot = Mathf.RoundToInt(g.transform.rotation.eulerAngles.y);
+                    temp.objects.Add(t);
                 }
             }
+           
         }
-        PlayerPrefs.SetInt("NumOfLevels",PlayerPrefs.GetInt("NumOfLevels")+1);
+        SavedGameContainer s = new SavedGameContainer();
+        s.savedTemplate=temp;
+        s.Save("Assets/Resources/Saved Data/"+levelName+".xml");
     }
     public List<string> getSavedLevelNames()
     {
         List<string> levels = new List<string>();
         
-        int maxLevels = PlayerPrefs.GetInt("NumOfLevels");
-
-        for (int i = 0; i < maxLevels; i++)
-        {
-            levels.Add(PlayerPrefs.GetString("Levels" + i));
-        }
        
-        Debug.Log(levels);
 
         return levels;
     }
@@ -54,8 +57,23 @@ public class SaveLayout : MonoBehaviour {
     {
         PlayerPrefs.DeleteAll();
     }
-    public void Load()
+    public void Load(string name)
     {
-        getSavedLevelNames();
+        Instances.gridManager.ClearGrid();
+        SavedGameContainer sg = SavedGameContainer.Load("Assets/Resources/Saved Data/" + name + ".xml");
+        SaveTemplate s = sg.savedTemplate;
+        int size = s.objects.Count;
+        for (int i = 0; i < size; i++)
+        {
+            ObjectTemplate o = s.objects[i];
+            GameObject g = (GameObject)Resources.Load("Prefabs/" + o.name);
+             GameObject h = (GameObject) Instantiate(g,new Vector3(o.x, 0.5f, o.y),Quaternion.Euler(new Vector3(0, o.rot, 0)));
+            h.name = o.name;
+            h.transform.parent = GameObject.Find("World Objects").transform;
+            h.GetComponent<WorldObject>().IsActive = true;
+
+
+            
+        }
     }
 }

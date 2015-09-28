@@ -163,6 +163,10 @@ public class WorldPlacer : MonoBehaviour {
     public void setCurrentItem(GameObject g)
     {
         currentItem = g;
+        if (currentItem != null)
+        {
+            currentItem.transform.Rotate(0, 180, 0);
+        }
     }
     public GameObject getCurrentItem()
     {

@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<SavedGameContainer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <savedTemplate levelName="DAN">
+    <gridSize>50</gridSize>
+    <objects>
+      <ObjectTemplate>
+        <rot>180</rot>
+        <x>7</x>
+        <y>15</y>
+        <name>Conveyor 1</name>
+      </ObjectTemplate>
+      <ObjectTemplate>
+        <rot>180</rot>
+        <x>8</x>
+        <y>15</y>
+        <name>Conveyor 1</name>
+      </ObjectTemplate>
+      <ObjectTemplate>
+        <rot>180</rot>
+        <x>8</x>
+        <y>16</y>
+        <name>Conveyor 1</name>
+      </ObjectTemplate>
+      <ObjectTemplate>
+        <rot>180</rot>
+        <x>9</x>
+        <y>15</y>
+        <name>Conveyor 1</name>
+      </ObjectTemplate>
+      <ObjectTemplate>
+        <rot>180</rot>
+        <x>9</x>
+        <y>17</y>
+        <name>Conveyor 1</name>
+      </ObjectTemplate>
+      <ObjectTemplate>
+        <rot>90</rot>
+        <x>10</x>
+        <y>15</y>
+        <name>Conveyor 1</name>
+      </ObjectTemplate>
+      <ObjectTemplate>
+        <rot>180</rot>
+        <x>10</x>
+        <y>18</y>
+        <name>Conveyor 1</name>
+      </ObjectTemplate>
+      <ObjectTemplate>
+        <rot>90</rot>
+        <x>11</x>
+        <y>15</y>
+        <name>Conveyor 1</name>
+      </ObjectTemplate>
+      <ObjectTemplate>
+        <rot>180</rot>
+        <x>11</x>
+        <y>19</y>
+        <name>Conveyor 1</name>
+      </ObjectTemplate>
+      <ObjectTemplate>
+        <rot>180</rot>
+        <x>12</x>
+        <y>12</y>
+        <name>Conveyor 1</name>
+      </ObjectTemplate>
+      <ObjectTemplate>
+        <rot>90</rot>
+        <x>12</x>
+        <y>15</y>
+        <name>Conveyor 1</name>
+      </ObjectTemplate>
+      <ObjectTemplate>
+        <rot>180</rot>
+        <x>12</x>
+        <y>20</y>
+        <name>Conveyor 1</name>
+      </ObjectTemplate>
+      <ObjectTemplate>
+        <rot>180</rot>
+        <x>13</x>
+        <y>13</y>
+        <name>Conveyor 1</name>
+      </ObjectTemplate>
+      <ObjectTemplate>
+        <rot>90</rot>
+        <x>13</x>
+        <y>15</y>
+        <name>Conveyor 1</name>
+      </ObjectTemplate>
+      <ObjectTemplate>
+        <rot>180</rot>
+        <x>13</x>
+        <y>21</y>
+        <name>Conveyor 1</name>
+      </ObjectTemplate>
+      <ObjectTemplate>
+        <rot>180</rot>
+        <x>14</x>
+        <y>10</y>
+        <name>Conveyor 1</name>
+      </ObjectTemplate>
+      <ObjectTemplate>
+        <rot>180</rot>
+        <x>14</x>
+        <y>14</y>
+        <name>Conveyor 1</name>
+      </ObjectTemplate>
+      <ObjectTemplate>
+        <rot>180</rot>
+        <x>14</x>
+        <y>16</y>
+        <name>Conveyor 1</name>
+      </ObjectTemplate>
+      <ObjectTemplate>
+        <rot>180</rot>
+        <x>14</x>
+        <y>22</y>
+        <name>Conveyor 1</name>
+      </ObjectTemplate>
+      <ObjectTemplate>
+        <rot>180</rot>
+        <x>15</x>
+        <y>11</y>
+        <name>Conveyor 1</name>
+      </ObjectTemplate>
+      <ObjectTemplate>
+        <rot>180</rot>
+        <x>15</x>
+        <y>15</y>
+        <name>Conveyor 1</name>
+      </ObjectTemplate>
+      <ObjectTemplate>
+        <rot>180</rot>
+        <x>15</x>
+        <y>17</y>
+        <name>Conveyor 1</name>
+      </ObjectTemplate>
+      <ObjectTemplate>
+        <rot>180</rot>
+        <x>15</x>
+        <y>18</y>
+        <name>Conveyor 1</name>
+      </ObjectTemplate>
+      <ObjectTemplate>
+        <rot>180</rot>
+        <x>15</x>
+        <y>19</y>
+        <name>Conveyor 1</name>
+      </ObjectTemplate>
+      <ObjectTemplate>
+        <rot>180</rot>
+        <x>15</x>
+        <y>20</y>
+        <name>Conveyor 1</name>
+      </ObjectTemplate>
+      <ObjectTemplate>
+        <rot>180</rot>
+        <x>15</x>
+        <y>21</y>
+        <name>Conveyor 1</name>
+      </ObjectTemplate>
+      <ObjectTemplate>
+        <rot>180</rot>
+        <x>16</x>
+        <y>9</y>
+        <name>Conveyor 1</name>
+      </ObjectTemplate>
+      <ObjectTemplate>
+        <rot>180</rot>
+        <x>16</x>
+        <y>12</y>
+        <name>Conveyor 1</name>
+      </ObjectTemplate>
+      <ObjectTemplate>
+        <rot>180</rot>
+        <x>16</x>
+        <y>14</y>
+        <name>Conveyor 1</name>
+      </ObjectTemplate>
+      <ObjectTemplate>
+        <rot>180</rot>
+        <x>16</x>
+        <y>16</y>
+        <name>Conveyor 1</name>
+      </ObjectTemplate>
+      <ObjectTemplate>
+        <rot>180</rot>
+        <x>17</x>
+        <y>10</y>
+        <name>Conveyor 1</name>
+      </ObjectTemplate>
+      <ObjectTemplate>
+        <rot>180</rot>
+        <x>17</x>
+        <y>13</y>
+        <name>Conveyor 1</name>
+      </ObjectTemplate>
+      <ObjectTemplate>
+        <rot>180</rot>
+        <x>17</x>
+        <y>17</y>
+        <name>Conveyor 1</name>
+      </ObjectTemplate>
+      <ObjectTemplate>
+        <rot>180</rot>
+        <x>18</x>
+        <y>7</y>
+        <name>Conveyor 1</name>
+      </ObjectTemplate>
+      <ObjectTemplate>
+        <rot>180</rot>
+        <x>18</x>
+        <y>11</y>
+        <name>Conveyor 1</name>
+      </ObjectTemplate>
+      <ObjectTemplate>
+        <rot>180</rot>
+        <x>18</x>
+        <y>14</y>
+        <name>Conveyor 1</name>
+      </ObjectTemplate>
+      <ObjectTemplate>
+        <rot>180</rot>
+        <x>18</x>
+        <y>16</y>
+        <name>Conveyor 1</name>
+      </ObjectTemplate>
+      <ObjectTemplate>
+        <rot>180</rot>
+        <x>19</x>
+        <y>8</y>
+        <name>Conveyor 1</name>
+      </ObjectTemplate>
+      <ObjectTemplate>
+        <rot>180</rot>
+        <x>19</x>
+        <y>12</y>
+        <name>Conveyor 1</name>
+      </ObjectTemplate>
+      <ObjectTemplate>
+        <rot>180</rot>
+        <x>19</x>
+        <y>15</y>
+        <name>Conveyor 1</name>
+      </ObjectTemplate>
+      <ObjectTemplate>
+        <rot>0</rot>
+        <x>20</x>
+        <y>9</y>
+        <name>Conveyor 1</name>
+      </ObjectTemplate>
+      <ObjectTemplate>
+        <rot>180</rot>
+        <x>20</x>
+        <y>10</y>
+        <name>Conveyor 1</name>
+      </ObjectTemplate>
+      <ObjectTemplate>
+        <rot>180</rot>
+        <x>20</x>
+        <y>11</y>
+        <name>Conveyor 1</name>
+      </ObjectTemplate>
+      <ObjectTemplate>
+        <rot>180</rot>
+        <x>20</x>
+        <y>12</y>
+        <name>Conveyor 1</name>
+      </ObjectTemplate>
+      <ObjectTemplate>
+        <rot>180</rot>
+        <x>20</x>
+        <y>13</y>
+        <name>Conveyor 1</name>
+      </ObjectTemplate>
+      <ObjectTemplate>
+        <rot>180</rot>
+        <x>21</x>
+        <y>10</y>
+        <name>Conveyor 1</name>
+      </ObjectTemplate>
+      <ObjectTemplate>
+        <rot>180</rot>
+        <x>22</x>
+        <y>11</y>
+        <name>Conveyor 1</name>
+      </ObjectTemplate>
+    </objects>
+  </savedTemplate>
+</SavedGameContainer>

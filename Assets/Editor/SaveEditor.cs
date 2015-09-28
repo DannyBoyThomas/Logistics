@@ -5,13 +5,15 @@ using System.Collections;
 [CustomEditor(typeof(SaveLayout))]
 public class SaveEditor : Editor 
 {
-	string myString = "";
+    string myString = "Save As...";
+    string load = "Level Name...";
     bool showRecipes = false;
 
    
     public override void OnInspectorGUI()
     {
         myString = GUILayout.TextField(myString);
+        load = GUILayout.TextField(load);
 
         if(GUILayout.Button("Save"))
         {
@@ -21,13 +23,22 @@ public class SaveEditor : Editor
             }
             else
             {
+                Debug.Log("name: " + myString);
                 ((SaveLayout)target).Save(myString);
             }
             
         }
         if (GUILayout.Button("Load"))
         {
-            ((SaveLayout)target).Load();
+            if (load == "Level Name..." || load == "" || load == null)
+            {
+                myString = "Level Name...";
+            }
+            else
+            {
+                //Debug.Log("name: " + myString);
+                ((SaveLayout)target).Load(load);
+            }
         }
         if (GUILayout.Button("Delete All"))
         {

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<SavedGameContainer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <savedTemplate levelName="chain">
+    <gridSize>50</gridSize>
+    <objects>
+      <ObjectTemplate>
+        <rot>180</rot>
+        <x>17</x>
+        <y>11</y>
+        <name>Output</name>
+      </ObjectTemplate>
+      <ObjectTemplate>
+        <rot>180</rot>
+        <x>17</x>
+        <y>12</y>
+        <name>Conveyor 1</name>
+      </ObjectTemplate>
+      <ObjectTemplate>
+        <rot>180</rot>
+        <x>17</x>
+        <y>13</y>
+        <name>Conveyor 1</name>
+      </ObjectTemplate>
+      <ObjectTemplate>
+        <rot>180</rot>
+        <x>17</x>
+        <y>14</y>
+        <name>Conveyor 1</name>
+      </ObjectTemplate>
+      <ObjectTemplate>
+        <rot>180</rot>
+        <x>17</x>
+        <y>15</y>
+        <name>Conveyor 1</name>
+      </ObjectTemplate>
+      <ObjectTemplate>
+        <rot>180</rot>
+        <x>17</x>
+        <y>16</y>
+        <name>Conveyor 1</name>
+      </ObjectTemplate>
+      <ObjectTemplate>
+        <rot>180</rot>
+        <x>17</x>
+        <y>17</y>
+        <name>Conveyor 1</name>
+      </ObjectTemplate>
+      <ObjectTemplate>
+        <rot>180</rot>
+        <x>17</x>
+        <y>18</y>
+        <name>Conveyor 1</name>
+      </ObjectTemplate>
+      <ObjectTemplate>
+        <rot>180</rot>
+        <x>17</x>
+        <y>19</y>
+        <name>Conveyor 1</name>
+      </ObjectTemplate>
+      <ObjectTemplate>
+        <rot>180</rot>
+        <x>17</x>
+        <y>20</y>
+        <name>Import</name>
+      </ObjectTemplate>
+    </objects>
+  </savedTemplate>
+</SavedGameContainer>

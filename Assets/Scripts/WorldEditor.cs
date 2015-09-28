@@ -45,7 +45,7 @@ public class WorldEditor : MonoBehaviour {
                 int difY = (int)(coord.y - firstPos.y);
                 int valX = difX < 0 ? -1 : 1;
                 int valY = difY < 0 ? -1 : 1;
-                if(Input.GetKey(KeyCode.LeftControl))
+                if(Input.GetKey(KeyCode.LeftShift))
                 {
                     for (int i = 0; i <= Mathf.Abs(difX); i++)
                     {

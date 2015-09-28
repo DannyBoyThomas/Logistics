@@ -22,9 +22,7 @@ public class Importer : WorldObject
 	
 	public override void WorldUpdate () 
     {
-        if (Item == null)
-            return;
-
+        
                 if (nextAcceptor == null)
                 {
                    Vector2 furnacePos = Instances.gridManager.GetCoords(this.gameObject);
@@ -57,12 +55,15 @@ public class Importer : WorldObject
                      Vector3 itempos = transform.position + transform.forward;
                     itempos = new Vector3(Mathf.RoundToInt(itempos.x),0, Mathf.RoundToInt(itempos.z));
 
+                    if (Item == null)
+                        return;
+
                     if (nextAcceptor.CanAccept(Item.GetComponent<Item>(), (int)itempos.x, (int)itempos.z))
                     {
                         if (nextAcceptor.AcceptItem(Item))
                         {
                             
-                            Instances.moneyManager.AddFunds(-Item.GetComponent<Item>().Value, transform.position);
+                            Instances.moneyManager.AddFunds(-Item.GetComponent<Item>().BuyValue, transform.position);
                             this.Item = null;
                         }
                     }

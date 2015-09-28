@@ -7,5 +7,6 @@ using UnityEngine;
 public class Item : MonoBehaviour
 {
     public string ItemName = "New Item";
-    public int Value = 1;
+    public int BuyValue = 1;
+    public int SellValue = 1;
 }

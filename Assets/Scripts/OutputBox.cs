@@ -29,7 +29,7 @@ public class OutputBox : WorldObject, ItemAcceptor
             else
             {
                 
-                Instances.moneyManager.AddFunds(Item.GetComponent<Item>().Value, transform.position);
+                Instances.moneyManager.AddFunds(Item.GetComponent<Item>().SellValue, transform.position);
                 Destroy(Item.gameObject);
             }
         }

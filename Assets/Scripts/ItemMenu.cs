@@ -4,13 +4,20 @@ using UnityEngine.UI;
 
 public class ItemMenu : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
+	Color baseCol = Color.black;
+        Color textCol = Color.white;
+	void Start () 
+    {
+        GetComponent<Image>().color = baseCol;
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            transform.GetChild(i).GetComponentInChildren<Text>().color = textCol;
+        }
 	}
-    float targetOpacity = 1f;
+    float targetOpacity = 0.7f;
     float hiddenOpacity = 0.1f;
 	// Update is called once per frame
+    
 	void Update () 
     {
         if (HoverMenu())

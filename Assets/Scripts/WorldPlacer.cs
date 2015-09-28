@@ -58,7 +58,7 @@ public class WorldPlacer : MonoBehaviour {
                     int x = Mathf.RoundToInt(hit.point.x);
                     int z = Mathf.RoundToInt(hit.point.z);
                     removeSelectors();
-                    if (!Instances.itemMenu.HoverMenu())
+                    if (!Instances.itemMenu[0].HoverMenu() && !Instances.itemMenu[1].HoverMenu())
                     {
                         Instantiate(highlightPrefab, new Vector3(x, 0.5f, z), Quaternion.identity);
                     }

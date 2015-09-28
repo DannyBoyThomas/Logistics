@@ -129,7 +129,10 @@ public class WorldPlacer : MonoBehaviour {
         for (int i = 0; i < selectedPlaces.Count; i++)
         {
             Vector2 vec = selectedPlaces[i];
-            GameObject prefab = Instances.gridManager.inBounds(vec.x, vec.y) && isSpaceForObject(selectorPrefab, (int)vec.x, (int)vec.y) ? selectorPrefab : errorPrefab;
+            GameObject g = getCurrentItem();
+            int price =g.GetComponent<WorldObject>().Cost;
+            bool gotFunds = Instances.moneyManager.Money >= price*(i+1);
+            GameObject prefab = Instances.gridManager.inBounds(vec.x, vec.y) && isSpaceForObject(selectorPrefab, (int)vec.x, (int)vec.y) && gotFunds? selectorPrefab : errorPrefab;
             Instantiate(prefab, new Vector3(vec.x, 0.5f, vec.y), Quaternion.identity);
         }
     }

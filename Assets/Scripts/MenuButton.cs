@@ -36,6 +36,12 @@ public class MenuButton : MonoBehaviour {
         Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         GameObject h = (GameObject)Instantiate(spawnObject, pos, Quaternion.identity);
+
+        foreach(MenuCategory cat in Instances.itemMenu[0].GetComponentsInChildren<MenuCategory>())
+        {
+            cat.Open = false;
+        }
+
         Instances.worldPlacer.setCurrentItem(h);
 
 

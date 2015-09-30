@@ -72,11 +72,18 @@ public class SaveLayout : MonoBehaviour
         {
             ObjectTemplate o = s.objects[i];
             GameObject g = (GameObject)Resources.Load("Prefabs/" + o.name);
-             GameObject h = (GameObject) Instantiate(g,new Vector3(o.x, 0.5f, o.y),Quaternion.Euler(new Vector3(0, o.rot, 0)));
-            h.name = o.name;
-            h.transform.parent = GameObject.Find("World Objects").transform;
-            h.GetComponent<WorldObject>().IsActive = true;
-            Instances.gridManager.setObject(h,o.x,o.y);
+            if (g == null)
+            {
+                g = (GameObject)Resources.Load("Prefabs/WorldObjects/" + o.name);
+            }
+            if (g != null)
+            {
+                GameObject h = (GameObject)Instantiate(g, new Vector3(o.x, 0.5f, o.y), Quaternion.Euler(new Vector3(0, o.rot, 0)));
+                h.name = o.name;
+                h.transform.parent = GameObject.Find("World Objects").transform;
+                h.GetComponent<WorldObject>().IsActive = true;
+                Instances.gridManager.setObject(h, o.x, o.y);
+            }
           }
     }
 }

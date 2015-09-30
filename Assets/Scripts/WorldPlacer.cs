@@ -226,9 +226,9 @@ public class WorldPlacer : MonoBehaviour {
             for (int i = 0; i < selectedPlaces.Count; i++)
             {
                 Vector2 vec = selectedPlaces[i];
-                if (Instances.gridManager.inBounds(vec.x, vec.y) ||   isSpaceForObject(getCurrentItem(), (int)vec.x, (int)vec.y))
+                if (Instances.gridManager.inBounds(vec.x, vec.y) &&   isSpaceForObject(getCurrentItem(), (int)vec.x, (int)vec.y))
                 {
-
+                   
                     if (m.Money >= price)
                     {
                         GameObject h = (GameObject)Instantiate(currentItem, new Vector3(vec.x, 0.5f, vec.y), currentItem.transform.rotation);

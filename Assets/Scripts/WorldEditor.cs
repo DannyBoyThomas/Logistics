@@ -12,6 +12,7 @@ public class WorldEditor : MonoBehaviour {
 	void Start () 
     {
         deletePrefab = (GameObject)Resources.Load("Prefabs/Delete");
+        selectedPlaces = new List<Vector2>();
 	}
 	
 	// Update is called once per frame
@@ -19,12 +20,14 @@ public class WorldEditor : MonoBehaviour {
     {
 
         Vector2 coord = getPointerCoord();
-        GameObject cI = Instances.worldPlacer.getCurrentItem();
+        //GameObject cI = Instances.worldPlacer.getCurrentItem();
         if (Input.GetKey(KeyCode.Escape))
         {
             cancelled = true;
         }
-        if (coord.x >= 0 &&  cI== null)
+
+        
+        if (coord.x >= 0 )
         {
          
             if (Input.GetMouseButtonDown(1))
@@ -79,11 +82,22 @@ public class WorldEditor : MonoBehaviour {
             }
             if (Input.GetMouseButtonUp(1))
             {
+
+               
+                bool removed = false;
                 if (!cancelled)
                 {
-                    remove();
+                    removed =remove();
                 }
                 cancelled = false;
+
+                GameObject g = Instances.gridManager.getObject(firstPos);
+                if (!removed)// no object removed
+                {
+                    Instances.worldPlacer.destroyCurrentItem();
+                    //Instances.worldPlacer.setCurrentItem(null);
+                    Instances.worldPlacer.selectedPlaces.Clear();
+                }
 
             }
         }
@@ -106,9 +120,10 @@ public class WorldEditor : MonoBehaviour {
             Destroy(g);
         }
     }
-    void remove()
+    bool remove()
     {
-        
+
+        bool removed = false;
         for (int i = 0; i < selectedPlaces.Count; i++)
         {
             Vector2 vec = selectedPlaces[i];
@@ -119,11 +134,14 @@ public class WorldEditor : MonoBehaviour {
                 int price = g.GetComponent<WorldObject>().Cost;
                 
                 Destroy(g);
-                Instances.gridManager.setObject(null, (int)vec.x, (int)vec.y);
+               
                 Instances.moneyManager.AddFunds(price, new Vector3(vec.x,0.5f,vec.y));
+                removed = true;
             }
         }
+       
         selectedPlaces.Clear();
+        return removed;
     }
     public LayerMask layer;
     Vector2 getPointerCoord()

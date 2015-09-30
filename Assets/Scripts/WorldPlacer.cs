@@ -6,36 +6,41 @@ using System.Collections.Generic;
 public class WorldPlacer : MonoBehaviour {
 
     public GameObject currentItem;
-    List<Vector2> selectedPlaces;
+    public List<Vector2> selectedPlaces;
     Vector2 firstPos;
     GameObject selectorPrefab;
 
     GameObject highlightPrefab;
     GameObject errorPrefab;
+    GameObject changePrefab;
     char dir = 'n';
 
-   public bool buttonClicked = false;
+   public bool escape = false;
    GameObject worldParent;
-    bool prevClicked = false;
+   
 	void Start () {
         selectedPlaces = new List<Vector2>();
         selectorPrefab = (GameObject)Resources.Load("Prefabs/Selector");
         highlightPrefab = (GameObject)Resources.Load("Prefabs/Highlighter");
        errorPrefab = (GameObject)Resources.Load("Prefabs/Delete");
+       changePrefab = (GameObject)Resources.Load("Prefabs/Overwrite");
         worldParent = GameObject.Find("World Objects");
 	}
 	
 	// Update is called once per frame
     
     public LayerMask layer;
+    int firstRot = 180;
+    
 	void Update ()
     {
         
 
-        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButtonDown(1) && getCurrentItem() != null)
+        if (Input.GetKeyDown(KeyCode.Escape)  && getCurrentItem() != null)
             {
-                destroyCurrentItem();
+               // destroyCurrentItem();
                 selectedPlaces.Clear();
+                escape = true;
                 
             }
 
@@ -60,7 +65,8 @@ public class WorldPlacer : MonoBehaviour {
                     removeSelectors();
                     if (!Instances.itemMenu[0].HoverMenu() && !Instances.itemMenu[1].HoverMenu())
                     {
-                        Instantiate(highlightPrefab, new Vector3(x, 0.5f, z), Quaternion.identity);
+                        GameObject p = (GameObject)Instantiate(highlightPrefab, new Vector3(x, 0.5f, z), Quaternion.identity);
+                       
                     }
                     if (g != null)
                     {
@@ -71,17 +77,22 @@ public class WorldPlacer : MonoBehaviour {
 
                         if (Input.GetKeyDown(KeyCode.Q))
                         {
-                            g.transform.Rotate(Vector3.up, 90);
+                            //g.transform.Rotate(Vector3.up, 90);
+                            firstRot += 90;
+                          
                         }
                         if (Input.GetKeyDown(KeyCode.E))
                         {
-                            g.transform.Rotate(Vector3.up, -90);
+                            //g.transform.Rotate(Vector3.up, -90);
+                            firstRot -= 90;
+                           
                         }
 
                         if (Input.GetMouseButtonDown(0))
                         {
                             selectedPlaces.Clear();
                             firstPos = coords;
+                            //firstRot = (int)getCurrentItem().transform.rotation.eulerAngles.y;
 
                         }
                         else if (Input.GetMouseButton(0))
@@ -108,15 +119,42 @@ public class WorldPlacer : MonoBehaviour {
                                     selectedPlaces.Add(new Vector2(firstPos.x, firstPos.y + (valY*i)));
                                 }
                             }
-                            draw();
+
+
+                            
+
+
+
+                            if (!escape)
+                            {
+                                draw();
+                            }
                         }
                     
                  }
               }
+                if (g != null)
+                {
+                    if (Input.GetKey(KeyCode.LeftShift))
+                    {
+                        getCurrentItem().transform.rotation = getDirection();//direction going
+                    }
+                    else
+                    {
+                      
+                        getCurrentItem().transform.rotation = Quaternion.Euler(0, firstRot, 0);
+                    }
+                }
             if (Input.GetMouseButtonUp(0) && g != null)
             {
-
-               spawn();
+                if (!escape)
+                {
+                    spawn();
+                 }
+                firstRot = 180;
+                getCurrentItem().transform.rotation = Quaternion.Euler(0, firstRot, 0);
+               escape = false;
+              
 
              }
           }  
@@ -124,16 +162,32 @@ public class WorldPlacer : MonoBehaviour {
     void draw()
     {
         removeSelectors();
-       
+
 
         for (int i = 0; i < selectedPlaces.Count; i++)
         {
             Vector2 vec = selectedPlaces[i];
             GameObject g = getCurrentItem();
-            int price =g.GetComponent<WorldObject>().Cost;
-            bool gotFunds = Instances.moneyManager.Money >= price*(i+1);
-            GameObject prefab = Instances.gridManager.inBounds(vec.x, vec.y) && isSpaceForObject(selectorPrefab, (int)vec.x, (int)vec.y) && gotFunds? selectorPrefab : errorPrefab;
-            Instantiate(prefab, new Vector3(vec.x, 0.5f, vec.y), Quaternion.identity);
+            int price = g.GetComponent<WorldObject>().Cost;
+            bool gotFunds = availableFunds() >= price * (i + 1);
+
+            bool useSelector = Instances.gridManager.inBounds(vec.x, vec.y) && isSpaceForObject(selectorPrefab, (int)vec.x, (int)vec.y) && gotFunds;
+            GameObject prefab = useSelector ? selectorPrefab : errorPrefab;
+
+            if (!useSelector) // try and swap
+            {
+                if (Input.GetKey(KeyCode.LeftControl))
+                {
+                    GameObject placed = Instances.gridManager.getObject(vec);
+                    if (placed != null)
+                    {
+                        int placedPrice = placed.GetComponent<WorldObject>().Cost;
+                        //Debug.Log("here");
+                        prefab = changePrefab;
+                    }
+                }
+            }
+            GameObject p = (GameObject)Instantiate(prefab, new Vector3(vec.x, 0.5f, vec.y), Quaternion.identity);
         }
     }
     void removeSelectors()
@@ -149,23 +203,42 @@ public class WorldPlacer : MonoBehaviour {
         if (getCurrentItem() != null)
         {
             int price = getCurrentItem().GetComponent<WorldObject>().Cost;
+            //bool rotate = !Input.GetKey(KeyCode.LeftShift);
 
             removeSelectors();
+            if (Input.GetKey(KeyCode.LeftControl))
+            {
+                for (int i = 0; i < selectedPlaces.Count; i++) //remove swaps
+                {
+                    Vector2 vec = selectedPlaces[i];
+                    GameObject g = Instances.gridManager.getObject(vec);
+                    if ( g!= null)
+                    {
+                        int cost = g.GetComponent<WorldObject>().Cost;
+                        m.AddFunds(cost);
+                        Destroy(g);
+                        Instances.gridManager.setObject(null, (int)vec.x, (int)vec.y);
+                       
+                    }
+                    
+                }
+            }
             for (int i = 0; i < selectedPlaces.Count; i++)
             {
                 Vector2 vec = selectedPlaces[i];
-                if (Instances.gridManager.inBounds(vec.x, vec.y) && isSpaceForObject(currentItem, (int)vec.x, (int)vec.y))
+                if (Instances.gridManager.inBounds(vec.x, vec.y) ||   isSpaceForObject(getCurrentItem(), (int)vec.x, (int)vec.y))
                 {
 
                     if (m.Money >= price)
                     {
-                        GameObject h = (GameObject)Instantiate(currentItem, new Vector3(vec.x, 0.5f, vec.y), getDirection());
+                        GameObject h = (GameObject)Instantiate(currentItem, new Vector3(vec.x, 0.5f, vec.y), currentItem.transform.rotation);
                         h.transform.parent = worldParent.transform;
                         h.name = currentItem.name.Split('(')[0]; //remove clone name
                         h.GetComponent<WorldObject>().IsActive = true;
 
                         Instances.gridManager.addObject(h);
-                        m.AddFunds(-price,h.transform.position);
+                        m.AddFunds(-price, h.transform.position);
+
                     }
                 }
             }
@@ -231,5 +304,43 @@ public class WorldPlacer : MonoBehaviour {
     {
             Destroy(currentItem);
             setCurrentItem(null);
+    }
+    //public void colourObject(Color col, int x, int y)
+    //{
+    //    GameObject g = Instances.gridManager.getObject(new Vector2(x, y));
+    //    if (g != null)
+    //    {
+    //        for (int i = 0; i < g.transform.childCount; i++)
+    //        {
+    //            Transform child = g.transform.GetChild(i);
+    //            if (child.GetComponent<Renderer>() != null)
+    //            {
+    //                Color current = child.GetComponent<Renderer>().material.color;
+    //                child.GetComponent<Renderer>().material.color = col;
+                   
+    //            }
+    //        }
+    //    }
+    //}
+    public int availableFunds()
+    {
+        int money = Instances.moneyManager.Money;
+
+        if(Input.GetKey(KeyCode.LeftControl))
+        {
+            for (int i = 0; i < selectedPlaces.Count; i++)
+            {
+                Vector2 vec = selectedPlaces[i];
+                GameObject current = Instances.gridManager.getObject(vec);
+                if (current != null)
+                {
+                    int price = current.GetComponent<WorldObject>().Cost;
+                    money += price;
+                }
+            }
+        }
+
+        
+        return money;
     }
 }

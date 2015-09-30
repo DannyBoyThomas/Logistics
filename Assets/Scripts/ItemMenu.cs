@@ -34,10 +34,20 @@ public class ItemMenu : MonoBehaviour {
 
                 for (int i = 0; i < transform.childCount; i++)
                 {
-                    Color c = transform.GetChild(i).GetComponent<Image>().color;
-                    transform.GetChild(i).GetComponent<Image>().color = new Color(c.r, c.g, c.b, col.a * 2);
-                    Color t = transform.GetChild(i).GetComponentInChildren<Text>().color;
-                    transform.GetChild(i).GetComponentInChildren<Text>().color = new Color(t.r, t.g, t.b, col.a*2);
+                     Transform child = transform.GetChild(i);
+                     if (child != null)
+                     {
+                         if (child.GetComponent<Image>() != null)
+                         {
+                             Color c = transform.GetChild(i).GetComponent<Image>().color;
+                             transform.GetChild(i).GetComponent<Image>().color = new Color(c.r, c.g, c.b, col.a * 2);
+                         }
+                         if (child.GetComponentInChildren<Text>() != null)
+                         {
+                             Color t = transform.GetChild(i).GetComponentInChildren<Text>().color;
+                             transform.GetChild(i).GetComponentInChildren<Text>().color = new Color(t.r, t.g, t.b, col.a * 2);
+                         }
+                     }
                 }
             }
 
@@ -50,10 +60,20 @@ public class ItemMenu : MonoBehaviour {
                 GetComponent<Image>().color -= new Color(0, 0, 0, 0.1f);
                  for (int i = 0; i < transform.childCount; i++)
                 {
-                    Color c = transform.GetChild(i).GetComponent<Image>().color;
-                    transform.GetChild(i).GetComponent<Image>().color = new Color(c.r, c.g, c.b, col.a );
-                     Color t = transform.GetChild(i).GetComponentInChildren<Text>().color;
-                     transform.GetChild(i).GetComponentInChildren<Text>().color = new Color(t.r, t.g, t.b, col.a);
+                    Transform child = transform.GetChild(i);
+                    if (child != null)
+                    {
+                        if (child.GetComponent<Image>() != null)
+                        {
+                            Color c = child.GetComponent<Image>().color;
+                            transform.GetChild(i).GetComponent<Image>().color = new Color(c.r, c.g, c.b, col.a);
+                        }
+                        if (child.GetComponentInChildren<Text>() != null)
+                        {
+                            Color t = child.GetComponentInChildren<Text>().color;
+                            transform.GetChild(i).GetComponentInChildren<Text>().color = new Color(t.r, t.g, t.b, col.a);
+                        }
+                    }
                    
                 }
             }

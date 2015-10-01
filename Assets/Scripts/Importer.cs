@@ -13,6 +13,14 @@ public class Importer : WorldObject
 	
 	}
 
+
+    public override void WorldClick()
+    {
+        Instances.importMenu.importer = this;
+        Instances.importMenu.Show();
+    }
+
+
     public void OnDestroy()
     {
         ImportItem = null;
@@ -49,7 +57,7 @@ public class Importer : WorldObject
                 {
                     if(Item == null)    
                     Item = GameObject.Instantiate(ImportItem, SpawnPoint.position, Quaternion.identity) as GameObject;
-                    Item.hideFlags = HideFlags.HideInHierarchy;
+                    //Item.hideFlags = HideFlags.HideInHierarchy;
                 }
 
                      Vector3 itempos = transform.position + transform.forward;

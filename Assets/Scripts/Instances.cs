@@ -9,11 +9,15 @@ public class Instances : MonoBehaviour {
 
     public static MoneyManager moneyManager;
 
+    public static ImportMenu importMenu;
+
 	void Start () {
         gridManager = GameObject.FindObjectOfType<GridManager>();
         worldPlacer = GameObject.FindObjectOfType<WorldPlacer>();
         itemMenu = GameObject.FindObjectsOfType<ItemMenu>();
         moneyManager = GameObject.FindObjectOfType<MoneyManager>();
+
+        importMenu = GameObject.FindObjectOfType<ImportMenu>();
 	}
 	
 	// Update is called once per frame

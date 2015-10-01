@@ -15,4 +15,5 @@ public class WorldObject : MonoBehaviour {
     }
 
     public virtual void WorldUpdate() { }
+    public virtual void WorldClick() { }
 }

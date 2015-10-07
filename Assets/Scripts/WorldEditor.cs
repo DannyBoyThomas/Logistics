@@ -20,9 +20,14 @@ public class WorldEditor : MonoBehaviour {
     {
 
         Vector2 coord = getPointerCoord();
-        //GameObject cI = Instances.worldPlacer.getCurrentItem();
+        GameObject cI = Instances.worldPlacer.getCurrentItem();
         if (Input.GetKey(KeyCode.Escape))
         {
+           
+            if (cI != null && selectedPlaces.Count<=0)
+            {
+                Instances.worldPlacer.destroyCurrentItem();
+            }
             cancelled = true;
         }
 
@@ -41,14 +46,14 @@ public class WorldEditor : MonoBehaviour {
 
             else if (Input.GetMouseButton(1) && !cancelled)
             {
-                
+
 
                 selectedPlaces = new List<Vector2>();
                 int difX = (int)(coord.x - firstPos.x);
                 int difY = (int)(coord.y - firstPos.y);
                 int valX = difX < 0 ? -1 : 1;
                 int valY = difY < 0 ? -1 : 1;
-                if(Input.GetKey(KeyCode.LeftShift))
+                if (Input.GetKey(KeyCode.LeftShift))
                 {
                     for (int i = 0; i <= Mathf.Abs(difX); i++)
                     {
@@ -78,28 +83,33 @@ public class WorldEditor : MonoBehaviour {
                     }
                 }
                 draw();
-               
+
             }
-            if (Input.GetMouseButtonUp(1))
+          
+            if (Input.GetMouseButtonUp(1)) // remove objects
             {
 
                
                 bool removed = false;
                 if (!cancelled)
                 {
-                    removed =remove();
+                    removed = remove();
                 }
-                cancelled = false;
+               
 
                 GameObject g = Instances.gridManager.getObject(firstPos);
-                if (!removed)// no object removed
+                if (!removed && !cancelled)// no object removed
                 {
                     Instances.worldPlacer.destroyCurrentItem();
                     //Instances.worldPlacer.setCurrentItem(null);
-                    Instances.worldPlacer.selectedPlaces.Clear();
+                    
                 }
+                
+                selectedPlaces.Clear();
+                cancelled = false;
 
-            }
+            } 
+            
         }
 	}
     void draw()

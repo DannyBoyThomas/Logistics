@@ -41,6 +41,7 @@ public class WorldPlacer : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape) && getCurrentItem() != null)
         {
             // destroyCurrentItem();
+           
             selectedPlaces.Clear();
             escape = true;
 
@@ -132,6 +133,7 @@ public class WorldPlacer : MonoBehaviour
                             draw();
                         }
                     }
+                   
 
                 }
             }
@@ -307,23 +309,7 @@ public class WorldPlacer : MonoBehaviour
         Destroy(currentItem);
         setCurrentItem(null);
     }
-    //public void colourObject(Color col, int x, int y)
-    //{
-    //    GameObject g = Instances.gridManager.getObject(new Vector2(x, y));
-    //    if (g != null)
-    //    {
-    //        for (int i = 0; i < g.transform.childCount; i++)
-    //        {
-    //            Transform child = g.transform.GetChild(i);
-    //            if (child.GetComponent<Renderer>() != null)
-    //            {
-    //                Color current = child.GetComponent<Renderer>().material.color;
-    //                child.GetComponent<Renderer>().material.color = col;
-
-    //            }
-    //        }
-    //    }
-    //}
+   
     public int availableFunds()
     {
         int money = Instances.moneyManager.Money;
